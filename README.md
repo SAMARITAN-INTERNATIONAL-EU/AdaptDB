@@ -1,7 +1,7 @@
-#Adapt DB
+# Adapt DB
 
 
-##What is Adapt DB?
+## What is Adapt DB?
 
 Adapt DB is a web-application that supports civil protection workers in finding vulnerable people in case of an emergency evacuation. It aims to complement the municipal emergency plans of small communities in disaster risk areas and was conceptualised by a consortium of aid organisations as part of the EU co-financed project ADAPT - Awareness of Disaster Relief for Vulnerable Groups. For more information about the project, visit http://adapt.samaritan-international.eu/.
 
@@ -19,7 +19,7 @@ Other features:
 - Data can be accesses via an API. Access to the API can be granted for every user account when an API-key for this user is created. 
 
 
-##Data protection features and considerations
+## Data protection features and considerations
 
 To comply with data protection standards, Adapt DB allows for various user roles, which can be given to users as needed:
 Sysadmins - Can create users, can define data sources and the levels/terminology of vulnerability the system uses
@@ -31,16 +31,16 @@ Besides selecting appropriate user roles, it is recommended to enable TLS on any
 You should always consult a legal professional on applicable data protection law before collecting personal data, in Adapt DB or otherwise.
 
 
-##How to setup Adapt DB?
+## How to setup Adapt DB?
 
 Check SETUP_MANUAL.md for information on how to setup the application on your server.
 
-##Where can I find more information about the API?
+## Where can I find more information about the API?
 
 For the available API routes check the route ```[Adapt-DB-Base-URL]/api/doc```. You can find JSON-Schema files and examples in the ```/api```-folder.  
 
 
-##How to backup data of an Adapt DB instance?
+## How to backup data of an Adapt DB instance?
 
 All data Adapt DB used are stored in one database. To backup all data you can simply create an database dump for this database.
 
