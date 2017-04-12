@@ -1,0 +1,5 @@
+The Documentations are not included in the git repository.
+It can be generated with the commands
+phing generateJSDoc
+and
+phing generatePHPDoc

@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Array of all zipcodes in the database",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "zipcode": {
+        "type": "string"
+      },
+      "city": {
+        "type": "string"
+      },
+      "country": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        },  "required": ["id"],
+      }
+    },
+    "required": [
+      "id",
+      "zipcode",
+      "city",
+      "country"
+    ]
+  }
+}

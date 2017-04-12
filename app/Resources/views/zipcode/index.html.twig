@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Zipcodes - Overview{% endblock %}
+
+{% block body %}
+    <h1>ZipCode list</h1>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Zipcode</th>
+                <th>City</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for zipCode in zipCodes %}
+            <tr>
+                <td><a href="{{ path('zipcode_show', { 'id': zipCode.id }) }}">{{ zipCode.id }}</a></td>
+                <td>{{ zipCode.zipcode }}</td>
+                <td>{{ zipCode.city }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('zipcode_show', { 'id': zipCode.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('zipcode_edit', { 'id': zipCode.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('zipcode_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

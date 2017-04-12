@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Transport Requirement{% endblock %}
+
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-6">
+
+            <h1>Edit Transport Requirement</h1>
+
+            {{ form_start(edit_form, {'attr': {'class': 'form'}}) }}
+            {{ form_label(edit_form.name) }}
+            {{ form_widget(edit_form.name, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+            <input class="btn btn-primary" type="submit" value="Save" />
+            <a class="btn btn-default" href="{{ path('transportrequirement_index') }}">Cancel</a>
+
+            {{ form_end(edit_form) }}
+
+        </div>
+    </div>
+
+{% endblock %}

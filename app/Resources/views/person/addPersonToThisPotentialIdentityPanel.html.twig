@@ -1,0 +1,55 @@
+<div class="col-md-12" id="addPersonToPIContainer" style="display: none">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">Add Person To This Potential Identity:</div>
+        </div>
+        <div class="panel-body">
+            <table id="AddPersonToPotentialIdentityTable" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr class="table-header-search">
+                    <th>
+                    </th>
+                    <th>
+                        <input id="addPotentialIdentity_queryFiscalCode" type="text" class="form-control addPotentialIdentityFilterField" data-filtercolumn="fiscalCode">
+                    </th>
+                    <th>
+                        <input id="addPotentialIdentity_queryFirstName" type="text" class="form-control addPotentialIdentityFilterField" data-filtercolumn="firstName">
+                    </th>
+                    <th>
+                        <input id="addPotentialIdentity_queryLastName" type="text" class="form-control addPotentialIdentityFilterField" data-filtercolumn="lastName">
+                    </th>
+                    <th>
+                        <input id="addPotentialIdentity_queryDateOfBirth" class="form-control addPotentialIdentityFilterField datepicker datepickerDateOfBirth" data-filtercolumn="dateOfBirth" data-date-format="dd-mm-yyyy">
+                    </th>
+                    <th>
+                        <select id="addPotentialIdentity_safetyStatus" class="form-control addPotentialIdentityFilterField" data-filtercolumn="safetyStatus">
+                            {#Values correspond to the CONST-values in PeopleAddressFilterType #}
+                            <option value="1">All</option>
+                            <option value="2">Safe</option>
+                            <option value="3">Not Safe</option>
+                        </select>
+                    </th>
+                    <th>
+                        <div class="btn-group btn-group-filter-actions" role="group" aria-label="Buttons to send the query, reset the query or view help">
+                            <button class="btn btn-primary" title="Start Searching" onclick="adapt_person.submitAddPotentialIdentityFilter()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            <button class="btn btn-default" title="Reset Searchfields" onclick="adapt_person.resetAddPotentialIdentityFilter()" id="search_filter_reset_buttontable-header-search"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></button>
+                            <button class="btn" title="Click for more informations about the search" onclick="adapt_searchInfoModal.openSearchInfoModal(event)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Data Source</th>
+                    <th>Fiscal Code</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date Of Birth</th>
+                    <th style="width: 108px;">Safety Status</th>
+                    <th style="width: 97px;">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

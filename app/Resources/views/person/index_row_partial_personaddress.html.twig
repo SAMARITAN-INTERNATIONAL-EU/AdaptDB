@@ -1,0 +1,12 @@
+<td>
+    {% if personAddress.isActive %}
+        <span title="{{ 'is_active_title_yes' | trans }}" class="glyphicon glyphicon-check" aria-hidden="true" style="cursor: default"></span>
+    {% else %}
+        <span title="{{ 'is_active_title_no' | trans }}" class="glyphicon glyphicon-unchecked " aria-hidden="true" style="cursor: default"></span>
+    {% endif %}
+</td>
+<td>{{ personAddress.address.street }}</td>
+<td>{{ personAddress.address.houseNr }}</td>
+
+<td>{{ personAddress.address.street.zipcode.zipcode }}</td>
+<td>{{ personAddress.address.street.zipcode.city }}</td>

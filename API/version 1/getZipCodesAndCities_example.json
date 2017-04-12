@@ -1,0 +1,442 @@
+[
+  {
+    "id": 106,
+    "zipcode": "01141-5918",
+    "city": "Wizaton",
+    "country": {
+      "id": 2
+    }
+  },
+  {
+    "id": 83,
+    "zipcode": "02759",
+    "city": "North Heberland",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 103,
+    "zipcode": "03484",
+    "city": "Angelineland",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 111,
+    "zipcode": "03951",
+    "city": "Lueilwitzchester",
+    "country": {
+      "id": 3
+    }
+  },
+  {
+    "id": 102,
+    "zipcode": "06830",
+    "city": "Tremblayberg",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 35,
+    "zipcode": "07641",
+    "city": "West Floydbury",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 28,
+    "zipcode": "08877",
+    "city": "Emardmouth",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 61,
+    "zipcode": "09822",
+    "city": "Verdahaven",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 85,
+    "zipcode": "10421",
+    "city": "Port Elise",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 63,
+    "zipcode": "14664",
+    "city": "Sengerfort",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 22,
+    "zipcode": "19007",
+    "city": "Idellaton",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 27,
+    "zipcode": "19202-8307",
+    "city": "Emardton",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 75,
+    "zipcode": "23156",
+    "city": "North Lemuelside",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 20,
+    "zipcode": "23939",
+    "city": "Eichmannfurt",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 114,
+    "zipcode": "26618",
+    "city": "North Ayla",
+    "country": {
+      "id": 3
+    }
+  },
+  {
+    "id": 95,
+    "zipcode": "27544",
+    "city": "Port Gideon",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 113,
+    "zipcode": "28989",
+    "city": "West Justice",
+    "country": {
+      "id": 3
+    }
+  },
+  {
+    "id": 86,
+    "zipcode": "31527-1181",
+    "city": "North Jazlynburgh",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 91,
+    "zipcode": "31721-3422",
+    "city": "South Moises",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 1,
+    "zipcode": "34105-6689",
+    "city": "North Myrtie",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 97,
+    "zipcode": "38253",
+    "city": "Edythetown",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 107,
+    "zipcode": "42612",
+    "city": "Lake Addisonville",
+    "country": {
+      "id": 2
+    }
+  },
+  {
+    "id": 105,
+    "zipcode": "44020",
+    "city": "East Annamae",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 67,
+    "zipcode": "44812-9170",
+    "city": "Nicoleview",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 59,
+    "zipcode": "48806",
+    "city": "Kovacektown",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 101,
+    "zipcode": "50937",
+    "city": "Köln",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 57,
+    "zipcode": "51427",
+    "city": "Stantonberg",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 54,
+    "zipcode": "54814",
+    "city": "North Lew",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 48,
+    "zipcode": "58728",
+    "city": "Strosintown",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 84,
+    "zipcode": "59008",
+    "city": "Weimannmouth",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 81,
+    "zipcode": "64222-0182",
+    "city": "West Elnaland",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 62,
+    "zipcode": "65249-0241",
+    "city": "Baronmouth",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 93,
+    "zipcode": "69276",
+    "city": "Hermanfurt",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 15,
+    "zipcode": "69450-9447",
+    "city": "West Mathias",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 46,
+    "zipcode": "72990",
+    "city": "North Wilfredburgh",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 51,
+    "zipcode": "74895",
+    "city": "Lake Lora",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 89,
+    "zipcode": "74959",
+    "city": "Paulbury",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 112,
+    "zipcode": "77100-8721",
+    "city": "Angieside",
+    "country": {
+      "id": 2
+    }
+  },
+  {
+    "id": 108,
+    "zipcode": "78842",
+    "city": "Rhiannonchester",
+    "country": {
+      "id": 2
+    }
+  },
+  {
+    "id": 13,
+    "zipcode": "79574-9551",
+    "city": "South Lemuelmouth",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 92,
+    "zipcode": "80331-8884",
+    "city": "Mertzville",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 64,
+    "zipcode": "82799-9634",
+    "city": "Monahantown",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 110,
+    "zipcode": "82805-1877",
+    "city": "Schmittside",
+    "country": {
+      "id": 2
+    }
+  },
+  {
+    "id": 55,
+    "zipcode": "83285",
+    "city": "Lake Mathias",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 90,
+    "zipcode": "84478",
+    "city": "Wintheiserfort",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 109,
+    "zipcode": "84592",
+    "city": "Evanview",
+    "country": {
+      "id": 2
+    }
+  },
+  {
+    "id": 104,
+    "zipcode": "85093-7103",
+    "city": "Maggioborough",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 10,
+    "zipcode": "90884-1714",
+    "city": "Isomfurt",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 70,
+    "zipcode": "92015-8980",
+    "city": "Ornton",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 4,
+    "zipcode": "92569",
+    "city": "South Beryl",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 69,
+    "zipcode": "93626",
+    "city": "Devantebury",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 79,
+    "zipcode": "95312-2396",
+    "city": "Clevelandstad",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 9,
+    "zipcode": "96534",
+    "city": "Port Harmonmouth",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 71,
+    "zipcode": "97504",
+    "city": "Gayleburgh",
+    "country": {
+      "id": 1
+    }
+  },
+  {
+    "id": 45,
+    "zipcode": "98542",
+    "city": "Darriontown",
+    "country": {
+      "id": 1
+    }
+  }
+]

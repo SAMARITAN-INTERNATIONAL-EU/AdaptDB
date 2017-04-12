@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Adapt - Show Emergency
+{% endblock %}
+
+{% block body %}
+    <h1>Emergency</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ emergency.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ emergency.title }}</td>
+            </tr>
+            <tr>
+                <th>Isactive</th>
+                <td>{% if emergency.isActive %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ emergency.createdAt }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('emergency_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('emergency_edit', { 'id': emergency.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

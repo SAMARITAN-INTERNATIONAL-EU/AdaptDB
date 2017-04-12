@@ -1,0 +1,86 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     adapt
+    database_user:     adapt
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            PLkasd234aSsd_aweqr_LqR3Fsafra
+
+    #Geonames-username - Geonames is used for the location search on the page "New Emergency"
+    #The username is send with every location-search request
+    geonames_username:
+
+    #nominatim-username - The Nominatim service is used to geocode an address.
+    #The email-address is send with every geocoding request
+    nominatim_email_address:
+
+    #Sender E-Mail Address for E-Mail notifications
+    notification_email_sender_address:
+
+    #can be empty, may contain a token if a premium service is used. Check http://www.geonames.org/commercial-webservices.html for details
+    geonames_token:
+
+    #number of potential identities shown on the Person-Address-Overview
+    entities_per_page: 20
+
+    #Related to the cronjob "phing sendEmailsForDataChanges"
+    #Example when the value is set to 10 (Minutes): Someone modifies the data of a person in Adapt DB.
+    #5 Minutes later the cronjob "phing sendEmailsForDataChanges" detects that changes have been made
+    #But the cronjob won't send out emails now, because the threshold is set to 10.
+    #This is done to prevent that the system sends out multiple emails when a person is edited multiple
+	#times in a short time period
+    send_emails_for_data_changes_not_modified_minutes_threshold: 10
+
+    #Related to the cronjob "phing sendEmailsForDataChanges"
+    #Here the subject and the "from"-email address can be set for the emails that are sent
+    email_data_change_information_subject: Adapt DB - Your data has been updated
+    email_data_change_information_from_email: someAddress@example.com
+
+    #These fields are used to detect potential identities.
+    #The preset means that a potential identity is detected when fiscalCode matches OR all fields ["firstName","lastName","dateOfBirth"] match.
+    #Preset: '[["fiscalCode"],["firstName","lastName","dateOfBirth"]]'
+    potential_identity_detection: '[["fiscalCode"],["firstName","lastName","dateOfBirth"]]'
+
+    #Uploaded csv files are cached in this folder
+    csv_file_temp_folder: ../tmp/csvFiles/
+
+    #When a person is imported these fields are required. If no value is defined in the import csv file
+	#for one of these fields, the person record cannot be imported.
+    #Import warnings will be generated in order to inform the user about this.
+    #Preset: '["fiscalCode","firstName","lastName"]'
+    required_fields_for_person_import: '["fiscalCode","firstName","lastName"]'
+
+    #Number of recent imports that are show on Import - Page 2/2
+    number_of_recent_imports_to_show: 3
+
+    #This defines the default position for the map
+    default_map_position_lat_lng: '[50.9408677,6.9589212]'
+
+    #This defines the default zoom level for the map
+    default_map_zoom: 13
+
+    #Map Variant - Possible Values: "OpenStreetMap.DE", "OpenStreetMap.Mapnik", "OpenStreetMap.HOT";"
+    #This changes the appearance of the map
+    map_variant: OpenStreetMap.HOT
+
+    #This is parameter the length of the generated API-Keys can be changed
+    api_key_length: 16
+
+    #Which function should be used for checking personAddresses against the selected polygon on "Find Vulnerable People"
+    #0 checks personAddresses against the minimum bounding rectangle
+    #1 for exact polygon-match - works from MYSQL version 5.6
+    #If MySQL <= 5.6 is installed use 0
+    #If the performance is bad with 1, try using 0
+    exact_polygon_match: 1

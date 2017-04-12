@@ -1,0 +1,643 @@
+body {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+form[name="find_vulnerable_people"] > label {
+    font-size: large;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+#map {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 400px;
+    cursor: crosshair;
+}
+
+.btn-gt-lt {
+    background: lightgrey;
+}
+
+.btn-gt-lt.active {
+    border: 1px solid blue;
+    background: deepskyblue;
+}
+
+.table {
+    margin-top: 10px;
+}
+
+.breadcrumb {
+    margin-top: -10px;
+}
+
+.leaflet-draw-toolbar a {
+    background-image: url('images/spritesheet.png');
+    background-repeat: no-repeat;
+}
+
+.nav-tabs {
+    margin-bottom: 30px;
+}
+
+.gt-lt.input-group-addon {
+
+    cursor: pointer;
+    padding-left: 2px;
+    padding-right: 2px;
+    font-size: 12pt;
+
+    /*Prevents text selection*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    user-select: none;           /* non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+tr.table-header-search > th .form-control {
+     padding-left: 2px;
+     padding-right: 2px;
+}
+
+.table > thead > tr.table-header-search > th {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+#find_vulnerable_people_SafetyStatus {
+    font-size: xx-small;
+    width: 50px;
+    word-wrap: break-word;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.table > thead > .table-header-headline > th {
+    cursor: pointer;
+
+    /*Prevents text selection*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    user-select: none;           /* non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.table-hover>tbody>tr:hover {
+    background: skyblue;
+}
+
+.icon_safe_yes, .icon_safe_no {
+    font-size: 16px;
+}
+
+.icon_safe_yes {
+    color: #00CC3A;
+}
+
+.icon_safe_no {
+    color: #ac2925;
+}
+
+a > span.glyphicon, span.glyphicon.showPointer {
+    cursor: pointer;
+}
+
+#resultsAsListView .table {
+    font-size: smaller;
+}
+
+td.centered-horizontal {
+    text-align: center;
+}
+
+ol.breadcrumb a {
+    cursor: pointer;
+}
+
+.typeahead {
+    z-index: 1051;
+}
+
+#addStreetAlertBox {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+#locationSearchContainer {
+    max-height: 290px;
+}
+
+#locationSearchResults {
+    height: 135px;
+    overflow-y: auto;
+}
+
+#locationSearchResults tr {
+    cursor: pointer;
+}
+
+#addStreetTextBox {
+    width: 300px;
+}
+
+.selectionHelper a {
+    cursor: pointer;
+    font-size: 10pt;
+}
+
+.selectionHelper {
+    margin-bottom: 15px;
+}
+
+.breadcrumb {
+    margin-bottom: 5px;
+}
+
+#queryDescription {
+    /*Same Style as .breadcrumb*/
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    list-style: none;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+
+    text-align: right;
+}
+
+#queryDescription b {
+    color: #777;
+}
+
+#queryDescription a:hover {
+    cursor: pointer;
+}
+
+.textBox_withMarginBottom {
+    margin-bottom: 10px;
+}
+
+td.actions_column > ul {
+    margin-bottom: 0px;
+}
+
+td.actions_column > a {
+    white-space: nowrap;
+}
+
+td.actions_column > a.hasGlyphicon  {
+    font-size: 1.3em;
+    margin-right: 10px;
+}
+
+td.is_active_column > span {
+    font-size: 1.3em;
+    margin-left: 15px;
+}
+
+.gender-symbol {
+    display: inline;
+    cursor: default;
+}
+
+td.is_active_column {
+    max-width: 55px;
+    min-width: 55px;
+}
+
+td.is_active_column .glyphicon-unchecked, td.is_active_column .glyphicon-check {
+    color: gray;
+}
+
+label.label_for_checkbox {
+    margin-right: 10px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
+
+tr.personAddress_gap_row {
+   height: 15px;
+}
+
+.editPersonInfoTable td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.editPersonInfoTable tr {
+    vertical-align: top;
+}
+
+.editPotentialIdentityInfoTable td {
+    padding-top: 2px;
+    padding-bottom: 10px;
+    vertical-align: top;
+}
+
+.belongsToPi {
+    background-color: beige !important;
+}
+
+ input[type=checkbox].form-control {
+    height: 20px;
+    width: 20px;
+}
+
+ .goto_page_textBox {
+     width: 65px;
+     height: 29px;
+     display: inline
+ }
+
+#person_address_person_remarks, #person_address_remarks, #contact_person_remarks, #person_address_without_person_remarks, #person_remarks {
+    resize: vertical;
+    height: 100px;
+}
+
+#contact_person_remarks {
+    height: 250px;
+}
+
+#validUntilCheckbox {
+    vertical-align: middle;
+}
+
+#addPersonToPIContainer {
+    margin-top: 20px;
+}
+
+#addPersonToPIContainer .panel-body {
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0px;
+}
+
+#addPersonToPIContainer .panel-body > table.table {
+    margin-top: 0px;
+}
+
+#dataChangeHistoryContainer {
+    margin-top: 20px;
+}
+
+#dataChangeHistoryContainer .panel-body {
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0px;
+}
+
+#dataChangeHistoryContainer .panel-body > table.table {
+    margin-top: 0px;
+}
+
+.btn-group.btn-group-filter-actions {
+    display: block;
+}
+
+.btn-group.btn-group-filter-actions .btn {
+    height: 34px;
+    width: 30%;
+    padding: 0px 5px 0px 5px;
+}
+
+.btn-group.btn-group-filter-actions .btn.btn-primary {
+    width: 40%;
+}
+
+#searchInfoModal .modal-body p {
+    font-size: 13pt;
+}
+
+#person_address_person_transportRequirement label, #person_medicalRequirement label, #person_transportRequirement label {
+    margin-right: 10px;
+}
+
+.table-scrollable-container {
+    max-height: 300px;
+}
+table.tableScrollable {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    width: 100%;
+}
+table.tableScrollable thead.tableScrollable {
+    /* head takes the height it requires,
+    and it's not scaled when table is resized */
+    flex: 0 0 auto;
+    width: calc(100% - 0.9em);
+}
+
+table.tableScrollable tbody.tableScrollable {
+    /* body takes all the remaining available space */
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: scroll;
+}
+
+table.tableScrollable tbody.tableScrollable tr {
+    width: 100%;
+}
+table.tableScrollable thead, table.tableScrollable tbody.tableScrollable tr {
+    display: table;
+    table-layout: fixed;
+}
+
+ul.formErrors {
+    margin-top: 0px;
+    padding-top: 5px;
+    font-size: 10pt;
+    color: #000000;
+    background-color: lightpink;
+    border-radius: 5px 5px 0px 0px;
+    padding-bottom: 5px;
+    margin-bottom: -3px;
+}
+
+.error_message ul {
+    color: #ff0000;
+}
+
+td.actions_column > span.glyphicon  {
+    margin-right: 14px;
+}
+
+td.actions_column ul {
+    list-style: none;
+    padding-left: 5px;
+}
+
+
+td.actions_column ul li {
+    line-height: 22px;
+}
+
+span.glyphicon-placeholder {
+    display: inline-block;
+    width: 14px;
+}
+
+span.glyphicon-search {
+    width: 20px;
+}
+
+/*Inconsistent Data - index */
+.potentialIdentityCompareContainer {
+    margin-bottom: 20px;
+    width: 100%;
+    display: inline-block;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.potentialIdentityCompareContainer th {
+    vertical-align: top;
+    font-size: 1em;
+    width: 280px;
+    min-width: 210px;
+}
+
+.potentialIdentityCompareContainer th, .potentialIdentityCompareContainer td {
+    padding-left: 5px;
+}
+
+td.leftSideHeading {
+    float: right;
+    margin-right: 5px;
+    font-size: 1em;
+    line-height: 28px;
+
+}
+
+.table-bordered>tbody>tr>td.leftSideHeading {
+    border: none;
+    font-weight: bold;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.safetyStatusInHeadline {
+    margin-top: 20px;
+}
+
+.badge-safe {
+    background: #00CC3A;
+    font-size: 10px;
+    cursor: default;
+
+    /*To prevent that the badge is selectable - see http://stackoverflow.com/a/4407335 */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari*/
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.badge-notSafe {
+    background: #ac2925;
+    font-size: 10px;
+    cursor: default;
+
+    /*To prevent that the badge is selectable - see http://stackoverflow.com/a/4407335 */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari*/
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.badge-datasource {
+    cursor: default;
+    /*To prevent that the badge is selectable - see http://stackoverflow.com/a/4407335 */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari*/
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.badge-isOfficial {
+    background-color: #6ea21d;
+}
+
+.isOfficial {
+    color: #6ea21d;
+}
+
+span.personShow-safetyStatus-badge {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+td span.personShow-safetyStatus-badge {
+    padding: 5px;
+}
+
+.personShow-safetyStatus-link {
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+
+.panel-title {
+    font-size: 1.5em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+td.center_glyphicon span.glyphicon{
+    margin-left: 45%;
+}
+
+.logo-row {
+    height: 42px;
+    margin-right: 2px;
+}
+
+.logo-row > img {
+    margin-left: 15px;
+}
+
+.login-logo-row {
+    margin-top: 15px;
+    margin-right: 25px;
+}
+
+.login-logo-row > img {
+    margin: 0px -10px 4px 0px;
+}
+
+.navbar {
+    margin-top: 76px;
+}
+
+.login-logo-row > img, .logo-row > img {
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+table.table > thead > tr > th {
+    vertical-align: top;
+}
+
+.settingDescription {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+td.show-ellipsis {
+    text-overflow: ellipsis;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#emergencyStreetListPanelBody {
+     overflow-y: auto;
+     padding: 0;
+}
+
+#emergencyStreetListPanelBody .table{
+    margin-top: 0px;
+}
+
+tr[data-pi-additional-person] {
+    display: none;
+}
+
+.table>tbody>tr.personListToggleRow {
+    height: 10px;
+    padding: 0px;
+    cursor: pointer;
+}
+
+.table>tbody>tr.personListToggleRow td {
+    height: 10px;
+    padding: 0px;
+}
+
+tr.personListToggleRow span.glyphicon {
+    margin-right: 25px;
+    margin-left: 25px;
+}
+
+#addSpecial_zipcodes_container {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+@media print {
+    .logo-row {
+        display: none;
+    }
+
+    #findVulnerablePeopleNewQueryButton {
+        display: none;
+    }
+
+    #findVulnerablePeopleRefineQueryButton {
+        display: none;
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    #queryDescription {
+        display: none;
+    }
+
+    .breadcrumb {
+        display: none;
+    }
+
+    tr.table-header-search {
+        display: none;
+    }
+
+    th.actions_column, td.actions_column {
+        display: none;
+    }
+
+    .row.pagination-row {
+        display: none;
+    }
+
+    tr.personListToggleRow {
+        display: none;
+    }
+
+    tr.personAddress_gap_row {
+        height: 5px;
+        /*background-color: darkgray;*/
+    }
+}

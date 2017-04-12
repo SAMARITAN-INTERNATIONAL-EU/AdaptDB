@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Potential Identities - Overview{% endblock %}
+
+
+{% block body %}
+    <h1>Potential Identity Overview</h1>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for potentialIdentity in potentialIdentities %}
+            <tr>
+                <td>{{ potentialIdentity.name }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('potentialidentity_show', { 'id': potentialIdentity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('potentialidentity_edit', { 'id': potentialIdentity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('potentialidentity_new') }}">New Potential Identity</a>
+
+        </li>
+    </ul>
+{% endblock %}

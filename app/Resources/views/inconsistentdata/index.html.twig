@@ -1,0 +1,194 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Adapt - Inconsistent Data
+{% endblock %}
+
+{% block body %}
+<h1>Inconsistent Data</h1>
+
+    <div class="alert alert-info">This page lists potential identities with inconsistent data. The systems compared the persons of potential identities. When inconsistencies in the persons are detected the potential identities are listed here.</div>
+        {% if inconsistentPIs | length == 0 %}
+            No inconsistent potential identities were detected.
+        {% else %}
+
+           {% for inconsistentPI in inconsistentPIs %}
+               <div class="potentialIdentityCompareContainer">
+
+                   <div class="pull-right" style="margin-top: 20px">
+                       <a class="btn btn-danger btn-xs" onclick="adapt_inconsistentData_index.removeInconsistentPI({{ inconsistentPI.id }})">Remove This Entry</a>
+                   </div>
+
+               <h3>Potential Identity: {{ inconsistentPI.potentialIdentity.name }}</h3>
+               <p>{{ inconsistentPI.description }}</p>
+               <p>detected on {{ inconsistentPI.created | date("d M Y - H:i") }}h</p>
+
+
+                   <table class="table-striped table-bordered table-hover">
+                       <thead>
+                            <tr>
+                                <th style="border: none; width: 140px"></th>
+                                {% for person in inconsistentPI.potentialIdentity.persons %}
+                                        <th>
+                                            Person {{ loop.index }}
+                                        </th>
+                                {% endfor %}
+                            </tr>
+                       </thead>
+                       <tbody>
+                           <tr>
+                               <td class="leftSideHeading">Data Source</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   <td>
+                                       {% if person.dataSource is not empty %}
+                                           {{ person.dataSource.name }}
+                                       {% else %}
+                                           [none]
+                                       {% endif %}
+                                   </td>
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">First Name</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   <td>{{ person.firstName }}</td>
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">Last Name</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   <td>{{ person.lastName }}</td>
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">Fiscal Code</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   <td>{{ person.fiscalCode }}</td>
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">Date Of Birth</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   <td>
+                                       {% if person.dateOfBirth is not null %}
+                                           <div title="{{ person.dateOfBirth | date }}">{{ person.dateOfBirth | date }}</div>
+                                       {% else %}
+                                           [not set]
+                                       {% endif %}
+                                   </td>
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">Cell Phone</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   <td>
+                                       {% if person.cellPhone is not empty %}
+                                           {{ person.cellPhone }}
+                                       {% else %}
+                                           [not set]
+                                       {% endif %}
+                                   </td>
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">E-Mail</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   <td>
+                                       {% if person.email is not empty %}
+                                           {{ person.email }}
+                                       {% else %}
+                                           [not set]
+                                       {% endif %}
+                                   </td>
+
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">Transport Req.</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   <td>
+                                       {% if person.transportRequirements | length >= 1 %}
+                                           {{ person.transportRequirements | join(', ') }}
+                                       {% else %}
+                                           none
+                                       {% endif %}
+                                   </td>
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">Medical Req.</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   <td>
+                                       {% if person.medicalRequirements | length >= 1 %}
+                                           {{ person.medicalRequirements | join(', ') }}
+                                       {% else %}
+                                           none
+                                       {% endif %}
+                                   </td>
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">Vulnerability Level</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   {% if person.vulnerabilityLevel is not null %}
+                                        <td>{{ person.vulnerabilityLevel.name }} </td>
+                                   {% endif %}
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">Street</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   {% if person.personAddresses | length == 1 %}
+                                       <td>{{ person.personAddresses[0].address.street.name }}</td>
+                                   {% elseif person.personAddresses | length == 0 %}
+                                       <td rowspan="3">For this person no address is defined.</td>
+                                   {% else %}
+                                       <td rowspan="3">This person has more than one Person-Address is defined. Please check the differences by checking the Person-pages.</td>
+                                   {% endif %}
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">Zipcode</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   {% if person.personAddresses | length == 1 %}
+                                       <td>{{ person.personAddresses[0].address.street.zipcode.zipcode }}</td>
+                                   {% endif %}
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">City</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   {% if person.personAddresses | length == 1 %}
+                                       <td>{{ person.personAddresses[0].address.street.zipcode.city }}</td>
+                                   {% endif %}
+                               {% endfor %}
+                           </tr>
+                           <tr>
+                               <td class="leftSideHeading">Actions</td>
+                               {% for person in inconsistentPI.potentialIdentity.persons %}
+                                   <td><a href="{{ path('person_show', {'personId' : person.id, 'scrollToContainer': 0}) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Person</a></td>
+                               {% endfor %}
+                           </tr>
+
+                       </tbody>
+                   </table>
+
+               </div>
+           {% endfor %}
+
+        {% endif %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        {% include 'javascripts/Adapt_inconsistentData_index.js' %}
+    </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}

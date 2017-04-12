@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Adapt - Success
+{% endblock %}
+
+{% block body %}
+    <h1>Import - Success</h1>
+
+    <div class="alert" id="detectPotentialIdentitiesAlert">
+
+    </div>
+
+    {% if addedOrUpdatedPersons is defined %}
+        <div class="alert {% if importWarnings is empty %}alert-success{% else %}alert-warning{% endif %} ">
+            {{ addedOrUpdatedPersons | length }} Person(s) have been added or updated.
+            {% if importWarnings | length == 1 %}
+                But there was 1 warning.
+            {% elseif importWarnings | length > 1 %}
+                But there were {{ newImport.numberOfWarnings }} warnings.
+            {% endif %}
+            {% if detectMissingPersons and selectedDataSource.isOfficial %}
+                <br>
+                {{ numberOfDetectMissingPersons }} Persons were detected as missing. Check the <a href="{{ path('legacydata_index', {'initalTab': 'missing'}) }}">Legacy Data</a> for details.
+            {% endif %}
+        </div>
+
+        {% if newImport is not null %}
+
+            <h3>This import was created:</h3>
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Filename</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ newImport.timestamp | date("d-m-Y H:i:s") }}</td>
+                    <td>{{ newImport.filename }}</td>
+                    <td class="actions_column">
+                        {% if newImport.numberOfWarnings > 0 %}
+                            {{ newImport.numberOfWarnings }} Warnings
+                        {% else %}
+                            No Warnings
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        {% endif %}
+    {% endif %}
+
+    <a class="btn btn-default" href="{{ path("import_importsofdatasource", {'dataSourceId': selectedDataSource.id }) }}">Show all Imports of "{{ selectedDataSource.name }}"</a>
+
+    <div class="panel with-nav-tabs panel-default" style="margin-top: 20px">
+        <div class="panel-heading">
+
+            <ul class="nav nav-tabs" style="margin-top: 5px; margin-bottom: -10px">
+                <li class="active"><a data-toggle="tab" href="#persons">Persons added or updated</a></li>
+                <li><a data-toggle="tab" href="#warnings">Warnings</a></li>
+            </ul>
+
+        </div>
+        <div class="panel-body" style="padding: 0px 0px 0px 0px; margin-top: -12px;">
+            <div class="tab-content">
+                <div id="persons" class="tab-pane fade in active">
+
+                    {% if addedOrUpdatedPersons is defined %}
+
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for addedOrUpdatedPerson in addedOrUpdatedPersons %}
+                                <tr>
+                                    <td>{{ addedOrUpdatedPerson.person.firstname }} {{ addedOrUpdatedPerson.person.lastname }}</td>
+                                    <td>{{ addedOrUpdatedPerson.comment }}</td>
+                                    <td>
+                                        <a target="_blank" href="{{ path('person_show', { 'personId': addedOrUpdatedPerson.person.id, 'scrollToContainer': 0 }) }}">
+                                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Person
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <h3>No persons were imported.</h3>
+                    {% endif %}
+                </div>
+                <div id="warnings" class="tab-pane fade">
+                    {% if importWarnings is not empty %}
+
+                        <div id="warningsSection">
+                            <table class="table table-striped table-bordered table-hover ">
+                                <thead>
+                                <tr>
+                                    <th>Person</th>
+                                    <th>Message</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for importWarning in importWarnings %}
+                                    <tr>
+                                        <td>
+                                            {% if importWarning.person is not null %}
+                                                {{ importWarning.person.firstName }} {{ importWarning.person.lastName }}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ importWarning.message }}</td>
+                                        <td class="actions_column">
+                                            {% if importWarning.person is not null %}
+                                                <a target="_blank" href="{{ path('person_show', { 'personId': importWarning.person.id, 'scrollToContainer': 0 }) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Person</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    {% else %}
+                        <h3>No Warnings!</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#<ul class="nav nav-tabs" style="margin-top: 20px">#}
+        {#<li class="active"><a data-toggle="tab" href="#persons">Persons added or updated</a></li>#}
+        {#<li><a data-toggle="tab" href="#warnings">Warnings</a></li>#}
+    {#</ul>#}
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        {% include 'javascripts/Adapt_import_success.js' %}
+
+        $(document).ready(function () {
+            var detectPotentialIdentitiesUrl = "{{ path('import_updatePIs') }}";
+            adapt_import_success.updateDetectPiAlert(detectPotentialIdentitiesUrl);
+        });
+
+    </script>
+
+{% endblock %}

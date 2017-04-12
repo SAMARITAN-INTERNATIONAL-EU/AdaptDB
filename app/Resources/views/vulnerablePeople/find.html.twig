@@ -1,0 +1,445 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block breadcrumbs %}
+    <li class="active"><b>{{ selectedEmergency.title }}</b></li>
+    <li class="active">Find Vulnerable People</li>
+{% endblock %}
+
+{% block title %}
+    Adapt - Find Vulnerable People
+{% endblock %}
+
+{% block body %}
+
+    <div id="step1container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Find Vulnerable People - Step 1 / 2</h1>
+            </div>
+        </div>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active" id="tabSelectByMap">
+                <a href="#selectByMap" onclick="adapt_findPage.openTab('map')" role="tab">
+                    Select By Selected Area On Map
+                </a>
+            </li>
+            <li role="presentation" id="tabSelectByStreets">
+                <a href="#selectByStreets" onclick="adapt_findPage.openTab('streets')" role="tab">
+                    Select By Streets
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="selectByMap">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 style="margin-top: 62px; margin-bottom: 0px; padding-bottom: 0px;">Find vulnerable people by area selection:</h3>
+                    </div>
+
+                    <div class="col-md-4">
+                        {% if app.user.hasRoleDataAdmin %}
+                            <span class="pull-right">
+                                 <a class="btn btn-default btn-block" onclick="adapt_map.resetSelectionToEmergencyArea()">
+                                    <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                                    Reset Selection To Emergency Area(s)
+                                 </a>
+                                <br/>
+                                <a class="btn btn-default btn-block" onclick="adapt_map.redefineEmergencyAreaBasedOnSelection()">
+                                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                                    Redefine Emergency Area(s) Based On Selection
+                                </a>
+                            </span>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-12">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="selectByStreets">
+
+                <div class="row">
+                    <div class="col-lg-9">
+
+                        {% if app.user.hasRoleDataAdmin %}
+                            <form class="form-inline" id="addStreetForm">
+                                <div class="form-group">
+                                    <input id="addStreetTextBox"
+                                           type="text"
+                                           placeholder="Enter Street Name"
+                                           class="form-control typeahead"
+                                           data-provide="typeahead"
+                                           autocomplete="off">
+                                    <button class="btn btn-primary" onclick="adapt_findPage.addStreet(event)">Add Street</button>
+                                </div>
+                            </form>
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <button type="button" class="btn btn-default btn-block" onclick="adapt_findPage.openAddSpecialModal()" style="margin-top: 20px;">
+                                        Add Special
+                                    </button>
+                                </div>
+                                <div class="col-lg-6">
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if app.user.hasRoleDataAdmin %}
+                            <div class="modal fade" id="addSpecialModal" tabindex="-1" role="dialog" aria-labelledby="addSpecialModal">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Add Special</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div>
+                                                <ul class="nav nav-tabs" role="tablist">
+                                                    <li role="presentation" class="active">
+                                                        <a href="#addAllStreetsInDb" aria-controls="addAllStreetsInDb" role="tab" data-toggle="tab">
+                                                            Add all streets in database
+                                                        </a>
+                                                    </li>
+                                                    <li role="presentation">
+                                                        <a href="#addAllStreetsInZipcode" aria-controls="addAllStreetsInZipcode" role="tab" data-toggle="tab">
+                                                            Add all streets by zipcode
+                                                        </a>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="tab-content">
+                                                    <div role="tabpanel" class="tab-pane active" id="addAllStreetsInDb">
+                                                        <form class="form-inline" id="addAllStreetsInDatabase">
+                                                        </form>
+                                                            <p>This function adds all streets from the database to the emergency street list.<br/><br/><b>Note:</b> The emergency street list is not persisted after executing this function. You are free to reset the street list after this.</p>
+                                                        <div style="margin-bottom: 50px; margin-top: 20px;">
+                                                            <span class="pull-right">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary" onclick="adapt_findPage.addAllStreetsInDatabaseToEmergencyStreetList()">Add all streets</button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane" id="addAllStreetsInZipcode">
+                                                        <form class="form-inline" id="addAllStreetsInZipcodeForm">
+                                                            <div class="form-group">
+                                                                <label class="sr-only" for="addStreetsByZipcodeTextBox">Enter Zipcode</label>
+                                                                <input id="addStreetsByZipcodeTextBox"
+                                                                       type="text"
+                                                                       placeholder="Enter Zipcode"
+                                                                       class="form-control typeahead"
+                                                                       data-provide="typeahead"
+                                                                       autocomplete="off">
+                                                            </div>
+                                                            <p style="margin-top: 20px;"><b>Or select Zipcodes:</b></p>
+                                                            <div id="addSpecial_zipcodes_container"></div>
+                                                        </form>
+
+                                                        <table id="findStreetsByZipcodeTable"></table>
+
+                                                        <div style="margin-bottom: 30px;">
+                                                            <span class="pull-right">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                                                </button>
+                                                                <button type="button" class="btn btn-primary" onclick="adapt_findPage.addStreetsBySelectedZipcodes()">Add streets of selected zipcodes</button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-3">
+                        <div id="addStreetAlertBox" style="display: none" class="alert">
+                        </div>
+                        {% if app.user.hasRoleDataAdmin %}
+                            <span class="pull-right">
+                                <a class="btn btn-default btn-block" onclick="adapt_findPage.resetStreetsListToSavedEmergencyStreetsList()">
+                                    <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                                    Reset Street List To Saved Emergency Street List
+                                </a>
+                                <a class="btn btn-success btn-block" onclick="adapt_findPage.saveStreetListAsEmergencyStreetList()" id ="saveStreetListAsEmergencyStreetListButton" >
+                                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                                    Save Street List As Emergency Street List
+                                </a>
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div id="streetListInfoPanel" style="margin-top: 25px"></div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="pull-right">
+                                    <a id="showCompleteEmergencyStreetListButton" class="btn btn-sm btn-default" onclick="adapt_findPage.expandEmergencyStreetList(event)">Expand This Table</a>
+                                </div>
+                                <h3 class="panel-title">Emergency street list:</h3>
+                            </div>
+
+                            <div class="panel-body" id="emergencyStreetListPanelBody" style="max-height: 400px;">
+                                <table id="streetsTable" class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                    <th style="width: 83px;">Select<br>
+                                        <a onclick="adapt_findPage.selectAllStreetIds()">All</a> /
+                                        <a onclick="adapt_findPage.deselectAllStreetIds()">None</a>
+                                    </th>
+                                    <th>Street</th>
+                                    <th>Zipcode</th>
+                                    <th>City</th>
+                                    {% if app.user.hasRoleDataAdmin %}
+                                        <th style="width: 50px;">Remove</th>
+                                    {% endif %}
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn btn-default" onclick="adapt_findPage.jumpToStep('step2', true)">Proceed <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+
+        <div id="geoAreasCheckboxesContainer"></div>
+    </div>
+
+    <div id="step2container" style="display: none">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h1>Find Vulnerable People - Step 2 / 2</h1>
+            </div>
+
+            <div class="col-lg-6">
+
+                {{ form_start(form) }}
+
+                {{ form_label(form.vulnerabilityLevel) }}
+                {{ form_widget(form.vulnerabilityLevel) }}
+                <div class="selectionHelper">
+                    <a onclick="adapt_findPage.selectionHelperFunction('all', 'vulnerabilityLevel')">Select All</a> / <a onclick="adapt_findPage.selectionHelperFunction('none', 'vulnerabilityLevel')">Select None</a>
+                </div>
+
+                {{ form_label(form.medicalRequirements) }}
+                {{ form_widget(form.medicalRequirements) }}
+                <div class="selectionHelper">
+                    <a onclick="adapt_findPage.selectionHelperFunction('all', 'medicalRequirements')">Select All</a> / <a onclick="adapt_findPage.selectionHelperFunction('none', 'medicalRequirements')">Select None</a>
+                </div>
+
+                <div class="well well-sm">
+                    People without medical requirements are always included.
+                </div>
+
+                {{ form_label(form.transportRequirements) }}
+                {{ form_widget(form.transportRequirements) }}
+                <div class="selectionHelper">
+                    <a onclick="adapt_findPage.selectionHelperFunction('all', 'transportRequirements')">Select All</a> / <a onclick="adapt_findPage.selectionHelperFunction('none', 'transportRequirements')">Select None</a>
+                </div>
+
+                <div class="well well-sm">
+                    People without transport requirements are always included.
+                </div>
+
+                {{ form_label(form.safetyStatus) }}
+                {{ form_widget(form.safetyStatus) }}
+
+                {% if app.user.hasRoleRescueWorker == false %}
+                    <div style="margin-top: 50px;" class="alert alert-danger">
+                        Your user account doesn't have the role "Rescue Worker". Therefore you are not allowed to use the "Find Vulnerable People" function.
+                    </div>
+                {% endif %}
+
+                <input type="submit" style="display: none;" value="Find Vulnerable People"/>
+
+                <br>
+                {% if selectedEmergency is not null %}
+                    <a class="btn btn-default" onclick="adapt_findPage.jumpToStep('step1', true)">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to Step 1
+                    </a>
+
+                    {% if app.user.hasRoleRescueWorker == false %}
+                        {{ form_widget(form.submit, { 'attr': {'class': 'btn-primary', 'disabled': 'disabled'} }) }}
+
+                    {% else %}
+                        {{ form_widget(form.submit, { 'attr': {'class': 'btn-primary'} }) }}
+                    {% endif %}
+                {% endif %}
+
+                <div style="display: none">
+                    {{ form_rest(form) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <div class="col-lg-6">
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        {% include 'javascripts/Adapt_streets.js' %}
+        {% include 'javascripts/Adapt_map.js' %}
+        {% include 'javascripts/Adapt_map_vulnerablePeople_find.js' %}
+
+        {% include 'javascripts/Adapt_findPage.js' %}
+
+        $(document).ready(function () {
+
+            adapt_findPage.hasRoleDataAdmin = {% if app.user.hasRoleDataAdmin %}true{% else %}false{% endif %};
+
+            adapt_map.initLeafletJSMap();
+
+            adapt_map.initGeoAreasCheckboxesContainer();
+
+            //clears the field with the data of the custom defined polygon (that was defined in an earlier page-load by the user)
+            $(adapt_map.customGeoAreasArray_textBox).val("");
+
+            //SelectedStreetIds
+            //Init selectedStreetIdCheckboxes based on value of the form
+            var findVulnerablePeopleSelectedStreetIdsString = $('#find_vulnerable_people_selectedStreetIds').val();
+
+            if (findVulnerablePeopleSelectedStreetIdsString == "") {
+                //Cannot be an empty string - It needs to be valid JSON!
+                findVulnerablePeopleSelectedStreetIdsString = "[]";
+            }
+
+            adapt_map.selectedStreetIdCheckboxes = JSON.parse(findVulnerablePeopleSelectedStreetIdsString);
+
+            //StreetListIds
+            var findVulnerablePeopleStreetListIdsString = $('#find_vulnerable_people_streetListIds').val();
+            if (findVulnerablePeopleStreetListIdsString == "") {
+                //Cannot be an empty string - It needs to be valid JSON!
+                findVulnerablePeopleStreetListIdsString = "[]";
+            }
+
+            adapt_map.streetListIds = JSON.parse(findVulnerablePeopleStreetListIdsString);
+
+            //Add Special - Zipcode Tab
+            // If user has entered text, the radio boxes are disabled
+            $('#addStreetsByZipcodeTextBox').on('input', function () {
+                if ($(this).val().length > 0) {
+                    $('input[name="selectedStreets_ForAddByZipcode"]').prop("disabled", true);
+                } else {
+                    $('input[name="selectedStreets_ForAddByZipcode"]').prop("disabled", false);
+                }
+            });
+
+            adapt_map.initOriginalEmergencyGeoAreas();
+
+            adapt_map.centerGeoAreasArray(adapt_map.geoAreasForEmergency);
+
+            //Generate an plain array of all geoPoints
+            var geoPointsArray = [];
+
+            for (var property in adapt_map.geoAreasForEmergency) {
+                if (adapt_map.geoAreasForEmergency.hasOwnProperty(property)) {
+                    for (var k = 0; k <= adapt_map.geoAreasForEmergency[property]["geoPoints"].length; k++) {
+                        if (adapt_map.geoAreasForEmergency[property]["geoPoints"][k]) {
+                            geoPointsArray.push(adapt_map.geoAreasForEmergency[property]["geoPoints"][k]);
+                        }
+                    }
+                }
+            }
+
+            //Center the geoPointsArray
+            adapt_map.centerGeoPointsArray(geoPointsArray);
+
+            adapt_map.geoAreas = adapt_map.emergencyGeoAreasArray;
+
+            //selects the checkboxes based on the array in activeGeoAreaIdsArray
+            if ($(adapt_map.activeGeoAreaIdsArray).val() != "") {
+                //Selects the checkboxes for the active geoAreas
+                var activeGeoAreaIds = JSON.parse($(adapt_map.activeGeoAreaIdsArray).val());
+                for (var i=0; i<activeGeoAreaIds.length; i++) {
+                    $("input[name='fieldsetGeoAreas'][value='" + activeGeoAreaIds[i] + "']").prop('checked', true).trigger("change");
+                }
+            } else {
+                //Selects the checkboxes for the (original) emergency geoAreas
+                adapt_map.selectCheckboxesForGeoAreasForEmergency();
+            }
+
+            adapt_streets.initAddSteetTextBox();
+
+            adapt_findPage.getZipcodesFromDatabase();
+
+            switch ($(adapt_findPage.findModeTextBox).val()) {
+                case 'streets':
+                    adapt_findPage.openTab('streets');
+                    break;
+                case 'map':
+                    adapt_findPage.openTab('map');
+                    break;
+            }
+
+            if ($(adapt_map.findPageInitialViewTextBox).val() == 'step2') {
+                adapt_findPage.jumpToStep("step2", false);
+            }
+
+            var postPolygonCreationFunction = function (polygon) {
+
+                //Disables all fieldsetGeoAreas-checkboxes so that all geoAreas are de-selected.
+                adapt_map.redefineEmergencyAreaBasedOnSelection();
+
+                if ($(adapt_map.customGeoAreasArray_textBox).val() == "") {
+                    adapt_map.customGeoAreas = {};
+                } else {
+                    adapt_map.customGeoAreas = JSON.parse($(adapt_map.customGeoAreasArray_textBox).val());
+                }
+
+                //Adds the recently selected polygon to cutstomGeoAreas
+                adapt_map.customGeoAreas[polygon._leaflet_id] = polygon._latlngs;
+
+                adapt_map.addPolygonToCurrentlyDrawnPolygons(polygon);
+
+                $(adapt_map.customGeoAreasArray_textBox).val( JSON.stringify(adapt_map.customGeoAreas));
+
+            };
+
+            var postPolygonEditFunction = function (layer) {
+                //Sets the modified layer and writes it to the textBox
+                adapt_map.customGeoAreas[layer._leaflet_id] = layer._latlngs;
+                $(adapt_map.customGeoAreasArray_textBox).val( JSON.stringify(adapt_map.customGeoAreas));
+            };
+
+            var postPolygonDeleteFunction = function (deletedLayers) {
+                for (var i=0; i<Object.keys(deletedLayers).length; i++) {
+                    leaftletIdToRemove = Object.keys(deletedLayers)[i];
+                    deletedLayers[leaftletIdToRemove];
+                    delete adapt_map.customGeoAreas[leaftletIdToRemove];
+                    $(adapt_map.customGeoAreasArray_textBox).val(JSON.stringify(adapt_map.customGeoAreas));
+                }
+            };
+
+            adapt_map.initLeaftletJSWithDrawPanels(postPolygonCreationFunction, postPolygonEditFunction, postPolygonDeleteFunction);
+
+            adapt_map.hideEditingTools();
+            
+
+        });
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% form_theme edit_form 'form/fields.html.twig' %}
+
+{% block body %}
+    {{ form_start(edit_form) }}
+
+        {{ form_label(edit_form.firstName) }}
+        {{ form_errors(edit_form.firstName) }}
+        {{ form_widget(edit_form.firstName, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        {{ form_label(edit_form.lastName) }}
+        {{ form_errors(edit_form.lastName) }}
+        {{ form_widget(edit_form.lastName, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        {{ form_label(edit_form.phone) }}
+        {{ form_errors(edit_form.phone) }}
+        {{ form_widget(edit_form.phone, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        {{ form_label(edit_form.remarks) }}
+        {{ form_errors(edit_form.remarks) }}
+        {{ form_widget(edit_form.remarks, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+        <div style="display: none">
+            {{ form_rest(edit_form) }}
+        </div>
+    
+    {{ form_end(edit_form) }}
+
+{% endblock %}

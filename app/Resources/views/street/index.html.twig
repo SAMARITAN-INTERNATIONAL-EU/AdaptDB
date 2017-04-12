@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Streets - Overview{% endblock %}
+
+
+{% block body %}
+    <h1>Street list</h1>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Namenormalized</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for street in streets %}
+            <tr>
+                <td>{{ street.name }}</td>
+                <td>{{ street.nameNormalized }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('street_show', { 'id': street.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('street_edit', { 'id': street.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-default" href="{{ path('street_new') }}">New Street</a>
+    {#<a class="btn btn-primary" href="{{ path('street_normalizeStreetNames') }}">Normalize Street Names</a>#}
+
+{% endblock %}

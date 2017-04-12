@@ -1,0 +1,70 @@
+AppBundle\Entity\Person:
+    person{1..75}:
+        validUntil: '50%? <dateTimeBetween("-50 days", "+500 days")>'
+        firstName: '<firstName()>'
+        lastName: '<lastName()>'
+        fiscalCode: '<randomNumber(5)>'
+        dateOfBirth: '80%? <dateTimeBetween("-100 years", "now")>'
+        email: '70%? <safeEmail()>'
+        cellPhone: '<phoneNumber()>'
+        landlinePhone: '<phoneNumber()>'
+        genderMale: '<boolean()>'
+        remarks: '50%? <sentence()>'
+        medicalRequirements: '<numberBetween(0, 2)>x @medreq*'
+        transportRequirements: '<numberBetween(0, 2)>x @trareq*'
+        vulnerabilityLevel: '@vl<numberBetween(1, 4)>'
+        dataSource: '@ds<numberBetween(1, 3)>'
+
+
+AppBundle\Entity\EmergencyPersonSafetyStatus:
+    emergencyStatus{1..75}:
+        person (unique): '@person*'
+        emergency: '@emergency1'
+        safetyStatus: '<boolean()>'
+
+
+AppBundle\Entity\Zipcode:
+    zipcode{1..100}:
+        zipcode: '<postcode()>'
+        city: '<city()>'
+        country: '@countryGermany'
+
+
+AppBundle\Entity\Street:
+    street{1..100}:
+        name: '<streetName()>'
+        nameNormalized: ''
+        zipcode: '@zipcode*'
+
+
+AppBundle\Entity\Address:
+    address{1..100}:
+        houseNr: '<randomNumber(4)>'
+        street: '@street*'
+
+AppBundle\Entity\PersonAddress:
+    pa{1..60}:
+        floor: '40%? <randomNumber(1)>'
+        address (unique): '@address*'
+        person (unique): '@person*'
+        isActive: '<boolean()>'
+        absenceFrom: '25%? <dateTimeBetween("-1 months", "+5 months")>'
+        absenceTo: '25%? <dateTimeBetween("-1 months", "+5 months")>'
+
+AppBundle\Entity\DataSource:
+   ds2:
+       name: Registration office
+       nameShort: RO
+       isOfficial: true
+       defaultForAutomaticUpdateForClearlyIdentifiedAddresses: true
+       defaultForDetectMissingPersons: true
+       defaultForEnableGeocoding: true
+       importKeyColumns: ['@ikc3']
+   ds3:
+       name: Meals on Wheels
+       nameShort: MW
+       isOfficial: false
+       defaultForAutomaticUpdateForClearlyIdentifiedAddresses: false
+       defaultForDetectMissingPersons: false
+       defaultForEnableGeocoding: true
+       importKeyColumns: ['@ikc1', '@ikc2', '@ikc3', '@ikc4']

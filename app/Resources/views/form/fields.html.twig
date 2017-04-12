@@ -1,0 +1,57 @@
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }}>
+    {% for child in form %}
+        {% if multiple %}
+            <div class="checkbox">
+        {% else %}
+            <div class="radio">
+        {% endif %}
+
+        {{ form_widget(child) }}
+        </div>
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block checkbox_widget %}
+{% spaceless %}
+{% if label is empty %}
+    {% set label = name|humanize %}
+{% endif %}
+    <label  for="{{ id }}">
+        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans({}, translation_domain) }}
+    </label>
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {#<ul class="formErrors">#}
+            {#{% for children in form.children %}#}
+                {#{% if not children.vars.valid %}#}
+                   {#{% for error in children.vars.errors %}#}
+                        {#<li>{{ children.vars.label ~ ' ' ~#}
+                        {#error.messagePluralization is null#}
+                        {#? error.messageTemplate|trans(error.messageParameters, 'validators')#}
+                        {#: error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')#}
+                        {#}}</li>#}
+                    {#{% endfor %}#}
+                {#{% endif %}#}
+            {#{% endfor %}#}
+        {#</ul>#}
+
+        {% if errors|length > 0 %}
+            <ul class="formErrors">
+                {% for error in errors %}
+                    <li>{{
+                    error.messagePluralization is null
+                    ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                    }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}

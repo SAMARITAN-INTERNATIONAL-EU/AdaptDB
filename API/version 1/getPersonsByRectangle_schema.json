@@ -1,0 +1,219 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Array of persons",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "safety_status": {
+        "type": "boolean"
+      },
+      "valid_until": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "first_name": {
+        "type": "string"
+      },
+      "fiscal_code": {
+        "type": "string"
+      },
+      "email": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "date_of_birth": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "cell_phone": {
+        "type": "string"
+      },
+      "gender_male": {
+        "type": "boolean"
+      },
+      "remarks": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "medical_requirements": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        }
+      },
+      "transport_requirements": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        }
+      },
+      "vulnerability_level": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "contact_persons": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "first_name": {
+              "type": "string"
+            },
+            "last_name": {
+              "type": "string"
+            },
+            "remarks": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "first_name",
+            "last_name",
+            "remarks",
+            "phone"
+          ]
+        }
+      },
+      "person_addresses": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "object",
+              "properties": {
+                "house_nr": {
+                  "type": "string"
+                },
+                "street": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name"
+                  ]
+                },
+                "geopoint": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "lat",
+                    "lng",
+                    "position"
+                  ]
+                }
+              },
+              "required": [
+                "house_nr",
+                "street",
+                "geopoint"
+              ]
+            }
+          },
+          "required": [
+            "address",
+            "floor",
+            "remarks",
+            "is_active",
+            "absence_from",
+            "absence_to"
+          ]
+        }
+      },
+      "potential_identity": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "data_source": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      }
+    },
+    "required": [
+      "id",
+      "valid_until",
+      "first_name",
+      "last_name",
+      "fiscal_code",
+      "email",
+      "date_of_birth",
+      "landline_phone",
+      "cell_phone",
+      "gender_male",
+      "remarks",
+      "medical_requirements",
+      "transport_requirements",
+      "vulnerability_level",
+      "contact_persons",
+      "person_addresses",
+      "potential_identity",
+      "data_source"
+    ]
+  }
+}

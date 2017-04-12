@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Adapt - Emergency-List
+{% endblock %}
+
+{% block body %}
+    <h1>Emergencies - Overview</h1>
+
+    {% for flash_message in app.session.flashBag.get('notice') %}
+        <div class="alert alert-warning">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Selected <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true" data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom" data-content='{{ "emergency_selectedDescription" | trans }}'></span></th>
+                <th>Title</th>
+                <th>Active?</th>
+                <th>Creation-date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for emergency in emergencies %}
+            {% if app.user.hasRoleDataAdmin or (app.user.hasRoleRescueWorker and emergency.isActive == true) %}
+                <tr>
+                    <td>
+                        {% if emergency.id == selectedEmergencyId %}
+                            <span class="glyphicon glyphicon-play" aria-hidden="true" style="cursor: default"></span>
+                        {% endif %}
+                    </td>
+                    <td>{{ emergency.title }}</td>
+                    <td>
+                        {% if emergency.isActive %}
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" style="cursor: default"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-unchecked" aria-hidden="true" style="cursor: default"></span>
+                        {% endif %}
+                    </td>
+                    <td><div title="{{ emergency.createdAt|date('d M Y') }}">{{ emergency.createdAt | date }}</td>
+                    <td class="actions_column">
+                        <ul>
+                            <li><a href="{{ path('find_vulnerable_people', { 'emergencyId': emergency.id }) }}"><span class='glyphicon glyphicon-list' aria-hidden='true'></span> Find Vulnerable People</a></li>
+                            {% if app.user.hasRoleDataAdmin %}
+                                <li><a href="{{ path('personaddress_index', { 'emergencyId': emergency.id }) }}"><span class='glyphicon glyphicon-list' aria-hidden='true'></span> Person-Addresses Overview</a></li>
+                                {% if emergency.isActive == true %}
+                                    <li><a class="hasGlyphicon" href="{{ path('emergency_setActive', { 'emergencyId': emergency.id, 'newValue': 0 }) }}"><span class='glyphicon glyphicon-unchecked' aria-hidden='true'></span> Change to inactive</a></li>
+                                {% else %}
+                                    <li><a class="hasGlyphicon" href="{{ path('emergency_setActive', { 'emergencyId': emergency.id, 'newValue': 1 }) }}"><span class='glyphicon glyphicon-check' aria-hidden='true'></span> Change to active</a></li>
+                                {% endif %}
+                                <li><a class="deleteEntityButton hasGlyphicon" href="{{ path('emergency_delete', { 'emergencyId': emergency.id }) }}"><span class='glyphicon glyphicon-trash' aria-hidden='true'></span> Delete Emergency</a></li>
+                            {% endif %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if app.user.hasRoleDataAdmin %}
+        <a class="btn btn-sm btn-default" href="{{ path('emergency_new') }}">New Emergency</a>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        {% include 'javascripts/Adapt_deleteModalInitializer.js' %}
+
+        $(document).ready(function () {
+            var adapt_deleteModalInitializer = new Adapt_deleteModalInitializer("Emergency", 0);
+            adapt_deleteModalInitializer.init();
+
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+
+{% endblock %}

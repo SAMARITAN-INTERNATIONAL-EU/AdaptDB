@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Adapt - Inconsistent Data
+{% endblock %}
+
+{% block body %}
+<h1>Legacy Data</h1>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#validuntil" aria-controls="profile" role="tab" data-toggle="tab">Valid Until Exceeded</a></li>
+        <li role="presentation"><a href="#missing" aria-controls="missing" role="tab" data-toggle="tab">Missing In Data Source</a></li>
+        <li role="presentation"><a href="#noupdates" aria-controls="noupdates" role="tab" data-toggle="tab">No Updates In Last Year</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="validuntil">
+            <div class="alert alert-info">{{ 'legacy_data_description_valid_until_exceeded' | trans }}</div>
+
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <th>Person Name</th>
+                    <th>Date Of Birth</th>
+                    <th>Valid Until</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                {% if personAddressesValidUntil |length == 0%}
+                <tr>
+                    <td colspan="4">No data to show</td>
+                </tr>
+                {% else %}
+                    {% for person in personAddressesValidUntil %}
+                        <tr>
+                            <td>{{ person.firstname }} {{ person.lastname }}</td>
+                            <td><div title="{{ person.dateOfBirth | date("d M Y") }}" >{{ person.dateOfBirth| date }}</div></td>
+                            <td><div title="{{ person.validUntil | date("d M Y") }}">{{ person.validUntil | date }}</div></td>
+                            <td><a target="_blank" href="{{ path('person_show', {personId: person.id, scrollToContainer: 0})  }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Person</a></td>
+                        </tr>
+                    {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="missing">
+            <div class="alert alert-info">{{ 'legacy_data_description_missing_in_data_source' | trans }}</div>
+
+
+            <div class="table-scrollable-container">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <th>Person Name</th>
+                    <th>Date Of Birth</th>
+                    <th>Data Source</th>
+                    <th>Description</th>
+                    <th>Date of Message</th>
+                    <th>Action</th>
+                    </thead>
+                    <tbody>
+                    {% if personsMissingInDataSource |length == 0%}
+                        <tr>
+                            <td colspan="6">No data to show</td>
+                        </tr>
+                    {% else %}
+                        {% for personMissingInDataSource in personsMissingInDataSource %}
+                            <tr>
+                                <td>{{ personMissingInDataSource.person.firstname }} {{ personMissingInDataSource.person.lastname }}</td>
+                                <td><div title="{{ personMissingInDataSource.person.dateOfBirth | date("d M Y") }}">{{ personMissingInDataSource.person.dateOfBirth | date }}</div></td>
+                                <td><div class="badge badge-datasource {% if personMissingInDataSource.dataSource.isOfficial %}badge-isOfficial{% endif %}">{{ personMissingInDataSource.dataSource.nameShort }}</div></td>
+                                <td>{{ personMissingInDataSource.description }}</td>
+                                <td>
+                                    {% if personMissingInDataSource.created is not null %}
+                                        <div title="{{ personMissingInDataSource.created | date("d M Y") }}">{{ personMissingInDataSource.created | date }}</div>
+                                    {%  endif %}
+                                </td>
+                                <td class="actions_column">
+                                    <ul>
+                                        <li><a target="_blank" href="{{ path('person_show', {personId: personMissingInDataSource.person.id})  }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Person</a></li>
+                                        <li><a aria-hidden="true" data-container="body" role="button" data-html="true" data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom" data-content="
+                                            <a href='{{ path('person_missing_in_data_source_mark_as_checked', {personMissingInDataSourceId: personMissingInDataSource.id}) }}'>Hide This Record - Please Confirm</a>"><span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> Hide This Record</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="noupdates">
+            <div class="alert alert-info">{{ 'legacy_data_description_no_updates_in_last_year' | trans }}</div>
+
+            <div class="table-scrollable-container">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <th>Person Name</th>
+                    <th>Date Of Birth</th>
+                    <th>Date Of The Last Update</th>
+                    <th>Action</th>
+                    </thead>
+                    <tbody>
+                        {% if personsNotRecentlyUpdated |length == 0%}
+                            <tr>
+                                <td colspan="4">No data to show</td>
+                            </tr>
+                        {% else %}
+                            {% for tmpObj in personsNotRecentlyUpdated %}
+                                <tr>
+                                    <td>{{ tmpObj.person.firstname }} {{ tmpObj.person.lastname }}</td>
+                                    <td><div title="{{ tmpObj.person.dateOfBirth | date("d M Y") }}"> {{ tmpObj.person.dateOfBirth | date }}</div></td>
+                                    <td>
+                                        {% if tmpObj.lastUpdateTimestamp is not empty %}
+                                            <div title="{{ tmpObj.lastUpdateTimestamp | date("d M Y") }}">{{ tmpObj.lastUpdateTimestamp | date }}</div>
+                                        {%  endif %}
+                                    </td>
+                                    <td><a target="_blank" href="{{ path('person_show', {personId: tmpObj.person.id, scrollToContainer: 0,})  }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Person</a></td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+
+            $('.nav-tabs a[href="#{{ initialTab }}"]').tab('show');
+        });
+
+    </script>
+
+{% endblock %}

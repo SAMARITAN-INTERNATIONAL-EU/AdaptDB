@@ -1,0 +1,209 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'form/fields.html.twig' %}
+
+{% block title %}
+    Adapt - Create New Person
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+    {{ form_errors(form) }}
+
+    <div class="row">
+
+
+        <div class="col-lg-12">
+            <h1>New Person</h1>
+            <div class="alert alert-info">{{ 'person_new_information' | trans }}</div>
+        </div>
+
+        <div class="col-lg-6">
+
+            {{ form_label(form.person.firstName) }}
+            {{ form_errors(form.person.firstName) }}
+            {{ form_widget(form.person.firstName, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+            {{ form_label(form.person.lastName) }}
+            {{ form_errors(form.person.lastName) }}
+            {{ form_widget(form.person.lastName, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+            <div class="row">
+                <div class="col-lg-6">
+                    {{ form_label(form.person.fiscalCode) }}
+                    {{ form_errors(form.person.fiscalCode) }}
+                    {{ form_widget(form.person.fiscalCode, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                </div>
+                <div class="col-lg-6">
+                    {{ form_label(form.person.email) }}
+                    {{ form_errors(form.person.email) }}
+                    {{ form_widget(form.person.email, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    {{ form_label(form.person.dateOfBirth) }}
+                    {{ form_errors(form.person.dateOfBirth) }}
+                    {{ form_widget(form.person.dateOfBirth, {'attr': {'class': 'form-control textBox_withMarginBottom datepicker datepickerDateOfBirth'}}) }}
+                </div>
+                <div class="col-lg-6">
+                    {{ form_label(form.person.genderMale) }}
+                    {{ form_errors(form.person.genderMale) }}
+                    {{ form_widget(form.person.genderMale, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    {{ form_label(form.person.cellPhone) }}
+                    {{ form_errors(form.person.cellPhone) }}
+                    {{ form_widget(form.person.cellPhone, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                </div>
+                <div class="col-lg-6">
+                    {{ form_label(form.person.landlinePhone) }}
+                    {{ form_errors(form.person.landlinePhone) }}
+                    {{ form_widget(form.person.landlinePhone, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Address
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_label(form.address.street.name) }}
+                            {{ form_errors(form.address.street.name) }}
+                            {{ form_widget(form.address.street.name, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_label(form.address.houseNr) }}
+                            {{ form_errors(form.address.houseNr) }}
+                            {{ form_widget(form.address.houseNr, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_label(form.address.street.zipcode.zipcode) }}
+                            {{ form_errors(form.address.street.zipcode.zipcode) }}
+                            {{ form_widget(form.address.street.zipcode.zipcode, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_label(form.address.street.zipcode.city) }}
+                            {{ form_errors(form.address.street.zipcode.city) }}
+                            {{ form_widget(form.address.street.zipcode.city, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_label(form.floor) }}
+                            {{ form_errors(form.floor) }}
+                            {{ form_widget(form.floor, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_label(form.address.street.zipcode.country) }}
+                            {{ form_errors(form.address.street.zipcode.country) }}
+                            {{ form_widget(form.address.street.zipcode.country, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                        </div>
+                    </div>
+
+                    {{ form_label(form.remarks) }}
+                    {{ form_errors(form.remarks) }}
+                    {{ form_widget(form.remarks, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+
+            {#<div class="row">#}
+                {#<div class="col-lg-6">#}
+                {#</div>#}
+                {#<div class="col-lg-6">#}
+                    {#{{ form_label(form.person.validUntil) }}#}
+
+                    {#<span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true" data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom" data-content='{{ 'validUntilInfoText' | trans }}'></span>#}
+
+                    {#<div class="row">#}
+                        {#<div class="col-lg-2">#}
+                            {#<input type="checkbox" id="validUntilCheckbox" onchange="adapt_person_new.updatePersonValidUntilDisabledState(adapt_person_new)">#}
+                        {#</div>#}
+                        {#<div class="col-lg-10">#}
+                            {#{{ form_errors(form.person.validUntil) }}#}
+                            {#{{ form_widget(form.person.validUntil, {'attr': {'class': 'form-control textBox_withMarginBottom datepicker datepickerValidUntil', 'disabled' : 'disabled'}}) }}#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+
+            {#</div>#}
+
+            {{ form_label(form.person.vulnerabilityLevel) }}
+            {{ form_widget(form.person.vulnerabilityLevel, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+            {{ form_label(form.person.transportRequirements) }}
+            {{ form_widget(form.person.transportRequirements) }}
+
+            {{ form_label(form.person.medicalRequirements) }}
+            {{ form_widget(form.person.medicalRequirements) }}
+
+
+            {{ form_label(form.person.remarks) }}
+            {{ form_widget(form.person.remarks, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+            <div class="row">
+                <div class="col-lg-6">
+                    {{ form_label(form.person.validUntil) }}
+
+                    <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true" data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom" data-content='{{ 'validUntilInfoText' | trans }}'></span>
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                        <input type="checkbox" id="validUntilCheckbox" onchange="adapt_person_new.updatePersonValidUntilDisabledState(adapt_person_new)">
+                    </div>
+                    <div class="col-lg-10">
+                        {{ form_errors(form.person.validUntil) }}
+                        {{ form_widget(form.person.validUntil, {'attr': {'class': 'form-control textBox_withMarginBottom datepicker datepickerValidUntil', 'disabled' : 'disabled'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="col-lg-12">
+            <input class="btn btn-primary" type="submit" value="Create" />
+            <a class="btn btn-default" href="{{ path('personaddress_index') }}">Cancel</a>
+        </div>
+    </div>
+
+    <div style="display: none;">
+        {{ form_rest(form) }}
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        {% include 'javascripts/Adapt_person_new.js' %}
+        {% include 'javascripts/Adapt_datepicker.js' %}
+
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+
+    </script>
+
+{% endblock %}

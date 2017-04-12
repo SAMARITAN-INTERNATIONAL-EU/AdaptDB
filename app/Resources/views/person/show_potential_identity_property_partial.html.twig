@@ -1,0 +1,10 @@
+{% if propertyArray | length >= 1 %}
+    {% for property in propertyArray %}
+        <div class="{% if property.isOfficial %}isOfficial{% endif %}">
+            <div title="{{ property.dataSource }}">{{ property.value }}</div>
+            {#<span class="badge">{{ property.dataSource }}</span>#}
+        </div>
+    {% endfor %}
+{% else %}
+    [no data]
+{% endif %}

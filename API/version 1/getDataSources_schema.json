@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Array of all zipcodes in the database",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
+      },
+      "name_short": {
+        "type": "string"
+      },
+      "is_official": {
+        "type": "boolean"
+      },
+      "default_for_automatic_update_for_clearly_identified_addresses": {
+        "type": "boolean"
+      },
+      "default_for_detect_missing_persons": {
+        "type": "boolean"
+      },
+      "default_for_enable_geocoding": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "name_short",
+      "is_official",
+      "default_for_automatic_update_for_clearly_identified_addresses",
+      "default_for_detect_missing_persons",
+      "default_for_enable_geocoding"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-6">
+        <h1>Edit API-Key</h1>
+            {{ form_start(edit_form) }}
+            {{ form_label(edit_form.apiKey) }}
+            {{ form_widget(edit_form.apiKey, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+            {{ form_label(edit_form.user) }}
+            {{ form_widget(edit_form.user, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+            {{ form_label(edit_form.remarks) }}
+            {{ form_widget(edit_form.remarks, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+            <input class="btn btn-primary" type="submit" value="Edit" />
+            <a class="btn btn-default" href="{{ path('apikey_index') }}">Cancel</a>
+        {{ form_end(edit_form) }}
+    </div>
+</div>
+{% endblock %}

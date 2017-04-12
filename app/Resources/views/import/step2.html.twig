@@ -1,0 +1,305 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Adapt - Step 2/2
+{% endblock %}
+
+{% block body %}
+<h1>Import - Step 2/2</h1>
+{{ form_start(import_form) }}
+
+<div class="row" style="margin-bottom: 30px">
+
+    <div class="col-md-offset-2 col-md-8">
+
+        <a class="btn btn-default" href="{{ path("import_step1") }}" style="margin-bottom: 10px">
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to Step 1
+        </a>
+
+        <h3>Selected Data Source "{{ selectedDataSource.name }}"</h3>
+
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>
+                        Official
+                        <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                              data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom"
+                              data-content='{{ "dataSource_isOfficialDescription" | trans }}'></span>
+                    </th>
+                    <th>
+                        Key-Columns
+                        <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                              data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom"
+                              data-content='{{ "dataSource_keyColumnsDescription" | trans }}'></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ selectedDataSource.name }}</td>
+                    <td class="center_glyphicon">
+                        {% if selectedDataSource.isOfficial %}
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" style="cursor: default"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-unchecked" aria-hidden="true" style="cursor: default"></span>
+                        {% endif %}
+                    </td>
+                    <td>{{ selectedDataSource.importKeyColumns|join(', ') }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Most Recent Imports</h3>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Filename</th>
+                <th>Done</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% if mostRecentImports | length >= 1 %}
+
+                    {% for mostRecentImport in mostRecentImports %}
+                        <tr>
+                            <td>{{ mostRecentImport.timestamp | date("d-m-Y H:i:s") }}</td>
+                            <td>{{ mostRecentImport.filename }}</td>
+                            <td>
+                                {% if mostRecentImport.markedAsDone %}
+                                    <span title="Is done" class="glyphicon glyphicon-check" aria-hidden="true" style="cursor: default"></span>
+                                {% else %}
+                                    <span title="Is not done" class="glyphicon glyphicon-unchecked" aria-hidden="true" style="cursor: default"></span>
+                                {% endif %}
+                            </td>
+                            <td class="actions_column">
+                                {% if mostRecentImport.numberOfWarnings > 0 %}
+                                    <a href="{{ path('import_showWarnings', { 'importId': mostRecentImport.id }) }}">Show {{  mostRecentImport.numberOfWarnings }} Warnings</a>
+                                {% else %}
+                                    No Warnings
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="4">
+                            <a href="{{ path('import_importsofdatasource', { 'dataSourceId': selectedDataSource.id }) }}">Click here to see all previous imports of this Data Source</a>
+                        </td>
+                    </tr>
+
+                {% else %}
+
+                    <tr><td colspan="3">No recent imports found</td></tr>
+
+                {% endif %}
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-offset-2 col-md-8">
+
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+                <div class="pull-right">
+                    <a id="showSettingDescriptionsButton" class="btn btn-sm btn-default " onclick="adapt_import_step2.showSettingDescriptions()"><span class="glyphicon glyphicon-info-sign showPointer"></span> Show Descriptions</a>
+                </div>
+                <div class="panel-title">
+                    Import Settings
+                </div>
+            </div>
+            <div class="panel panel-body">
+
+                <div class="alert alert-info settingDescription" style="display: none">
+                    {{ "dataSource_enableGeocodingDescription" | trans }}
+                </div>
+
+                <div class="form-inline" style="margin: 0px">
+                    <label class="label_for_checkbox">
+                        {{ form_widget(import_form.enableGeocoding) }}
+                        {{ form_label(import_form.enableGeocoding) }}
+                    </label>
+                </div>
+
+                <div class="alert alert-info settingDescription" style="display: none">
+                    {{ "dataSource_useGeoPointsWhenAvailableDescription" | trans }}
+                </div>
+
+                <div class="form-inline" style="margin: 00px">
+                    <label class="label_for_checkbox">
+                        {{ form_widget(import_form.useGeoPointsWhenAvailable)  }}
+                        {{ form_label(import_form.useGeoPointsWhenAvailable) }}
+                    </label>
+                </div>
+
+                <div class="alert alert-info settingDescription" style="display: none">
+                    {{ "dataSource_automaticUpdateForClearlyIdentifiedAddressesDescription" | trans }}
+                </div>
+
+                <div class="form-inline" style="margin: 0px">
+                    <label class="label_for_checkbox">
+                        {{ form_widget(import_form.automaticUpdateForClearlyIdentifiedAddresses)  }}
+                        {{ form_label(import_form.automaticUpdateForClearlyIdentifiedAddresses) }}
+                    </label>
+                </div>
+
+                <div class="alert alert-info settingDescription" style="display: none">
+                    <p>{{ "dataSource_detectMissingPersonsDescription" | trans }}</p>
+                    <p>{{ personsOfDataSourceCount }} persons currently in the database.<p>
+                    <p>{{ numberOfImportablePersonsInCSVFile }} persons will be added or updated on import.</p>
+                    {% if personsOfDataSourceCount - numberOfImportablePersonsInCSVFile >= 1 %}
+                        <p>Approximately {{ personsOfDataSourceCount - numberOfImportablePersonsInCSVFile }} warnings will be generated for those persons who are not in this import.</p>
+                    {% endif %}
+                </div>
+
+                <div class="form-inline" style="margin: 00px">
+                    <label class="label_for_checkbox">
+                        {{ form_widget(import_form.detectMissingPersons)  }}
+                        {{ form_label(import_form.detectMissingPersons) }}
+                    </label>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div style="display:none;">
+        {{ form_rest(import_form) }}
+    </div>
+
+    <div class="col-md-offset-2 col-md-8" style="margin-bottom: 50px">
+
+        {% if mostRecentImports | length >= 1 %}
+            {% if csvClientFileName == mostRecentImports[0].filename %}
+                <div class="alert alert-warning">
+                    <strong>Warning:</strong> A CSV-file with the same name was already imported in the last import.
+                </div>
+            {% endif %}
+        {% endif %}
+
+        {% if errors is defined and errors|length > 0%}
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+
+                    <div class="panel-title">
+                        The CSV file contains {{ numberOfImportablePersonsInCSVFile }} person(s) that can be imported.
+                    {{ numberOfNotImportablePersonsInCSVFile }} person(s) cannot be imported because of errors:
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="pre-scrollable">
+                        <ul>
+                            {% for key, errorStringsArray in errors %}
+                                <ul>
+                                    {% if errorStringsArray | length >= 1 %}
+                                        <strong>Row {{ key }}:</strong>
+                                        {% for error in errorStringsArray %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    {% endif %}
+                                </ul>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-7 col-lg-offset-5">
+
+                    {% if numberOfImportablePersonsInCSVFile >= 1%}
+
+                        <div class="alert alert-info">
+                            If you decide to import the rows with errors  are not lost. You can see them later by choosing "Show Warnings" from the Import-list. This helps you to find out later which rows could not be imported.
+                        </div>
+
+                    {% endif %}
+                </div>
+
+                <div class="col-md-5">
+
+                    <a class="btn btn-lg btn-default pull-left" href="{{ path("import_step1") }}">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel Import
+                    </a>
+
+                </div>
+
+                <div class="col-md-7">
+                    {% if numberOfImportablePersonsInCSVFile >= 1%}
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">
+                            <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Start Import and skip those with errors
+                        </button>
+                    {% else %}
+                        <button class="btn btn-lg btn-danger pull-right" type="submit" disabled="disabled">
+                            <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Import not possible
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+
+        {% else %}
+
+            <div class="alert alert-success">
+                No errors in CSV-File detected. The file contains {{ numberOfImportablePersonsInCSVFile }} person(s) that can be imported.
+                {{ numberOfNotImportablePersonsInCSVFile }} person(s) cannot be imported because of errors.
+
+            </div>
+
+            <button class="btn btn-lg btn-primary pull-right" type="submit">
+                <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Start Import
+            </button>
+
+            <a class="btn btn-lg btn-default pull-left" href="{{ path("import_step1") }}">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel Import
+            </a>
+
+        {% endif %}
+
+    </div>
+
+
+    {{ form_end(import_form) }}
+
+    {% if amount_imported_persons is defined %}
+        <div class="alert {% if importWarnings is empty %}alert-success{% else %}alert-warning{% endif %} ">
+            {{ amount_imported_persons }} Person(s) have been imported.
+            {% if detectMissingPersons %}
+                <br>
+                {{ numberOfDetectMissingPersons }} Persons were detected as missing. Check the <a href="{{ path('legacydata_index', {'initalTab': 'missing'}) }}">Legacy Data</a> for details.
+            {% endif %}
+
+            {% if newImport is defined %}
+                <br>
+                {% if importWarnings is not empty %}
+                    {% if importWarnings | length == 1 %}
+                        There was 1 warning
+                    {% else %}
+                        There were {{ importWarnings | length}} warning
+                    {% endif %}
+                    in this import: <a href="{{ path('import_showWarnings', { 'importId': newImport.id }) }}">click here to see them</a>
+                {% endif %}
+            {% endif %}
+        </div>
+
+    {% endif %}
+
+    {% endblock %}
+
+    {% block javascripts %}
+
+        <script type="text/javascript">
+            {% include 'javascripts/Adapt_import_step2.js' %}
+
+            $('[data-toggle="popover"]').popover();
+        </script>
+
+    {% endblock %}

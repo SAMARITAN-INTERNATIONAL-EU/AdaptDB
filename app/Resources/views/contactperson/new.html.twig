@@ -1,0 +1,25 @@
+{% form_theme form 'form/fields.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    {{ form_label(form.firstName) }}
+    {{ form_errors(form.firstName) }}
+    {{ form_widget(form.firstName, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+    {{ form_label(form.lastName) }}
+    {{ form_errors(form.lastName) }}
+    {{ form_widget(form.lastName, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+    {{ form_label(form.phone) }}
+    {{ form_errors(form.phone) }}
+    {{ form_widget(form.phone, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+    {{ form_label(form.remarks) }}
+    {{ form_errors(form.remarks) }}
+    {{ form_widget(form.remarks, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+    <div style="display: none">
+        {{ form_rest(form) }}
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

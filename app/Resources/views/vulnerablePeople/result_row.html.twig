@@ -1,0 +1,70 @@
+<tr data-belongs-to-pi="{{ piHelperId }}" {% if piIndex >= 2 %}data-pi-additional-person{% endif %}>
+
+    {% if personForDisplay.personaddresses | length >= 1%}
+        {% set rowspanValue = personForDisplay.personaddresses | length %}
+    {% else %}
+        {% set rowspanValue = 1 %}
+    {% endif %}
+
+    <td rowspan="{{ rowspanValue }}"><div class="badge badge-datasource {% if personForDisplay.dataSource.isOfficial %}badge-isOfficial{% endif %}">{{ personForDisplay.dataSource.nameShort }}</div></td>
+    <td rowspan="{{rowspanValue }}">{{ personForDisplay.firstName }}</td>
+    <td rowspan="{{rowspanValue }}">{{ personForDisplay.lastName }}</td>
+    <td rowspan="{{rowspanValue }}">
+        {% if personForDisplay.dateOfBirth is empty %}
+            [unknown]
+        {% else %}
+            {{ personForDisplay.age }}
+        {% endif %}
+    </td>
+    {% spaceless %}
+        <td rowspan="{{rowspanValue }}">
+            {{ personForDisplay.vulnerabilityLevel }}
+        </td>
+        <td rowspan="{{rowspanValue }}">
+            {% if personForDisplay.medicalRequirements | length >= 1 %}
+                {{ personForDisplay.medicalRequirements|join(', ') }}
+            {% else %}
+                [none]
+            {% endif %}
+        </td>
+        <td rowspan="{{rowspanValue }}">
+            {% if personForDisplay.transportRequirements | length >= 1 %}
+                {{ personForDisplay.transportRequirements|join(', ') }}
+            {% else %}
+                [none]
+            {% endif %}
+        </td>
+    {% endspaceless %}
+
+    {% if personForDisplay.personaddresses | length == 0 %}
+        <td colspan="5">{{ "no_address_description_in_list" | trans }}</td>
+    {% else %}
+        {% include 'vulnerablePeople/result_personaddress.html.twig' with {'personAddress': personForDisplay.personaddresses[0] } %}
+    {% endif %}
+    <td rowspan="{{rowspanValue }}" class="centered-horizontal">
+        {% if personForDisplay.emergencySafetyStatuses[0].safetyStatus %}
+            <span class="badge badge-safe">Safe</span><br>
+        {% else %}
+            <span class="badge badge-notSafe">Not Safe</span><br>
+        {% endif %}
+    </td>
+    <td class="actions_column" rowspan="{{rowspanValue }}">
+        {% if personForDisplay.potentialIdentity is not null %}
+            <a target="_blank" href="{{ path('show_potential_identity', { 'potentialIdentityId': personForDisplay.potentialIdentity.id }) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show PI</a>
+            <br>
+        {% endif %}
+        <a target="_blank" href="{{ path('person_show', { 'personId': personForDisplay.id, 'scrollToContainer': 0 }) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Person</a>
+    </td>
+</tr>
+
+{% for personAddress in personForDisplay.personaddresses %}
+    {% if loop.index0 >= 1 %}
+        <tr data-belongs-to-pi="{{ piHelperId }}" {% if piIndex >= 2 %}data-pi-additional-person{% endif %}>
+            {% if personForDisplay.personaddresses | length >=1 %}
+                {% if loop.index0 >=1 %}
+                    {% include 'vulnerablePeople/result_personaddress.html.twig' with {'personAddress': personForDisplay.personaddresses[loop.index0] } %}
+                {% endif %}
+            {% endif %}
+        </tr>
+    {% endif %}
+{% endfor %}

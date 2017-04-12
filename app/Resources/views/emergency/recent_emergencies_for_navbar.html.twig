@@ -1,0 +1,14 @@
+{% if activeEmergencies|length > 0 %}
+    {% for activeEmergency in activeEmergencies %}
+        <li {% if activeEmergency.id == selectedEmergencyId %}title="This is the selected emergency"{% endif %}>
+            <a href="{{path('find_vulnerable_people', { 'emergencyId': activeEmergency.id }) }}">
+                {% if activeEmergency.id == selectedEmergencyId %}
+                    <span class="glyphicon glyphicon-play" aria-hidden="true" style="cursor: hand"></span>
+                {% endif %}
+                {{ activeEmergency.title }}
+            </a>
+        </li>
+    {% endfor %}
+{% else %}
+    <li><a href="#">No active emergencies</a></li>
+{% endif %}

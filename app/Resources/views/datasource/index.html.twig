@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Data Sources - Overview{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <h1>Data Sources - Overview</h1>
+
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Icon
+                        <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                              data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom"
+                              data-content='{{ "dataSource_badge_description" | trans }}'>
+                        </span>
+                    </th>
+                    <th>Name</th>
+                    <th>
+                        Official
+                        <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                              data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom"
+                              data-content='{{ "dataSource_isOfficialDescription" | trans }}'>
+                        </span>
+                    </th>
+                    <th>
+                        Key-Columns
+                        <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                          data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom"
+                          data-content='{{ "dataSource_keyColumnsDescription" | trans }}'>
+                        </span>
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for dataSource in dataSources %}
+                <tr>
+                    <td>
+                        <div class="badge badge-datasource {% if dataSource.isOfficial %}badge-isOfficial{% endif %}">{{ dataSource.nameShort }}</div>
+                    </td>
+                    <td>{{ dataSource.name }}</td>
+                    <td class="center_glyphicon">
+                        {% if dataSource.isOfficial %}
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" style="cursor: default"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-unchecked" aria-hidden="true" style="cursor: default"></span>
+                        {% endif %}
+                    </td>
+                    <td>{{ dataSource.importKeyColumns|join(', ') }}</td>
+                    <td class="actions_column">
+                        <a class="hasGlyphicon" href="{{ path('datasource_edit', { 'id': dataSource.id }) }}"><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span><div class="sr-only">Edit</div></a>
+
+                        {% if dataSource.name == "Backend" and dataSource.id == 1 %}
+                            <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true" data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom" data-content='The Data Source Backend is not deleteable. It is needed because every Person that is created from the Backend references this Data Source.'></span>
+                        {% else %}
+                            <a class="hasGlyphicon deleteEntityButton" href="{{ path('datasource_delete', { 'id': dataSource.id }) }}"><span class='glyphicon glyphicon-trash' aria-hidden='true'></span><div class="sr-only">Delete</div></a>
+                        {% endif %}
+
+                        {% if app.user.hasRoleDataAdmin %}
+                            <a class="hasGlyphicon" title="Start import with this Data Source" href="{{ path('import_step2', { 'selectedDataSourceId': dataSource.id }) }}"><span class='glyphicon glyphicon-import' aria-hidden='true'></span><div class="sr-only">Import</div></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-default" href="{{ path('datasource_new') }}">New Data Source</a>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        {% include 'javascripts/Adapt_deleteModalInitializer.js' %}
+
+        $(document).ready(function () {
+            var adapt_deleteModalInitializer = new Adapt_deleteModalInitializer("Data Source", 0);
+            adapt_deleteModalInitializer.init();
+
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+
+{% endblock %}

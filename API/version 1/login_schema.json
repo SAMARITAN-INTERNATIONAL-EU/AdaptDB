@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "One authToken object",
+  "type": "object",
+    "properties": {
+      "token": {
+        "type": "string"
+      },
+      "generated": {
+        "type": "string"
+      },
+        "exceeds": {
+        "type": "string"
+      }
+    }, "required": [
+      "token",
+      "generated",
+      "exceeds"
+    ]
+}

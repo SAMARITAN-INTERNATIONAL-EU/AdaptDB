@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ContactPerson list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Remarks</th>
+                <th>Cellphone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contactPerson in contactPeople %}
+            <tr>
+                <td><a href="{{ path('contactperson_show', { 'id': contactPerson.id }) }}">{{ contactPerson.id }}</a></td>
+                <td>{{ contactPerson.firstName }}</td>
+                <td>{{ contactPerson.lastName }}</td>
+                <td>{{ contactPerson.remarks }}</td>
+                <td>{{ contactPerson.cellPhone }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('contactperson_show', { 'id': contactPerson.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('contactperson_edit', { 'id': contactPerson.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('contactperson_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,369 @@
+{% extends 'base.html.twig' %}
+
+    {% macro addOrderNumberGlyphicon(fieldName, orderKey, orderValue) %}
+        {% if orderKey == fieldName %}
+            {% if orderValue == "ASC" %}
+                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+            {% else %}
+                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+            {% endif %}
+        {% endif %}
+    {% endmacro %}
+
+    {% macro addOrderAlphabetGlyphicon(fieldName, orderKey, orderValue) %}
+        {% if orderKey == fieldName %}
+            {% if orderValue == "ASC" %}
+                <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
+            {% else %}
+                <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true"></span>
+            {% endif %}
+        {% endif %}
+    {% endmacro %}
+
+{% block breadcrumbs %}
+    <li class="active"><b>{{ selectedEmergency.title }}</b></li>
+    <li><a href="{{path('find_vulnerable_people', { 'emergencyId': selectedEmergency.id }) }}">Find Vulnerable People</a></li>
+    <li class="active">Results</li>
+{% endblock %}
+
+{% block queryDescription %}
+    <b>Query:</b>
+    <a title="Find-Mode (Map or Streets)" onclick="adapt_resultPage.backToFindPageStep(1)">{{ findMode }}</a>,
+    <a title="Vulnerability Levels" onclick="adapt_resultPage.backToFindPageStep(2)">{{ queryVulnerabilityLevelsString }}</a>,
+    <a title="Medical Requirements" onclick="adapt_resultPage.backToFindPageStep(2)">{{ queryMedicalRequirementsString }}</a>,
+    <a title="Transport Requirements" onclick="adapt_resultPage.backToFindPageStep(2)">{{ queryTransportRequirementsString }}</a>
+{% endblock %}
+
+{% block title %}
+    Adapt - Find Vulnerable People - Results
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+
+    <div class="row" style="margin-bottom: 20px">
+        <div class="col-md-9">
+            {% if app.user.hasRoleDataAdmin %}
+                <h1>
+                    Find Vulnerable People - Results
+                    <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                      data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom" style="font-size: 12pt;"
+                      data-content='{{ "find_vulnerable_peope_results_data_admin_description" | trans }}'>
+                    </span>
+                </h1>
+                </span>
+            {% else %}
+                <h1>Find Vulnerable People - Results</h1>
+            {% endif %}
+
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-sm btn-block btn-default" id="findVulnerablePeopleNewQueryButton"
+               href="{{path('find_vulnerable_people', { 'emergencyId': selectedEmergency.id }) }}">
+                New Query
+            </a>
+
+            <a class="btn btn-sm btn-block btn-default" id="findVulnerablePeopleRefineQueryButton" onclick="adapt_resultPage.backToFindPageStep(1)">
+                Refine Query
+            </a>
+        </div>
+    </div>
+
+    <div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="resultPageTabs" style="display: none">
+            <li role="presentation" class="active" id="tab1">
+                <a href="#resultsOnMapView" aria-controls="profile" role="tab" data-toggle="tab">
+                    Show Results on Map
+                </a>
+            </li>
+            <li role="presentation" id="tab2">
+                <a href="#resultsAsListView" aria-controls="home" role="tab" data-toggle="tab">
+                    Show Results as List
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="resultsOnMapView">
+
+                <div id="map"></div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="resultsAsListView">
+
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                </div>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="table-header-search">
+                        <th></th>
+                        <th>
+                            {{ form_widget(form.queryFirstName, { 'attr': {'class': 'form-control',
+                                'style': 'width: 70px'} })
+                            }}
+                        </th>
+                        <th>
+                            {{ form_widget(form.queryLastName, { 'attr': {'class': 'form-control',
+                                'style': 'width: 70px'} })
+                            }}
+                        </th>
+                        <th>
+                            <div class="input-group" style="width: 50px;">
+                                <div class="input-group-addon gt-lt" id="grSmIndicatorAge">&ge;</div>
+                                {{ form_widget(form.queryAge, { 'attr': {'class': 'form-control',
+                                    'style': 'width: 35px'} })
+                                }}
+
+                            </div>
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>
+                            {{ form_widget(form.queryStreet, { 'attr': {'class': 'form-control',
+                                'style': 'width: 90px'} })
+                            }}
+                        </th>
+                        <th>
+                            {{ form_widget(form.queryStreetNumber, { 'attr': {'class': 'form-control',
+                                'style': 'width: 70px'} })
+                            }}
+                        </th>
+                        <th>
+                            {{ form_widget(form.queryZip, { 'attr': {'class': 'form-control',
+                                'style': 'width: 70px'} })
+                            }}
+                        </th>
+                        <th>
+                            {{ form_widget(form.queryCity, { 'attr': {'class': 'form-control',
+                                'style': 'width: 80px'} })
+                            }}
+                        </th>
+                        <th>
+                            <div class="input-group" style="width: 50px;">
+                                <div class="input-group-addon gt-lt" id="grSmIndicatorFloor">&ge;</div>
+                                {{ form_widget(form.queryFloor, { 'attr': {'class': 'form-control',
+                                    'style': 'width: 35px'} })
+                                }}
+                            </div>
+                        </th>
+                        <th>
+                            {{ form_widget(form.safetyStatus, { 'attr': {'class': 'form-control',
+                                'style': 'width: 50px; font-size: smaller'} })
+                            }}
+                        </th>
+                        <th style="width: 100px; min-width: 100px;">
+                            <div class="btn-group btn-group-filter-actions" role="group" aria-label="Button Group for filtering">
+                                <button class="btn btn-primary" title="Start Searching" onclick="adapt_resultPage.applySearchFieldButtonClicked(event)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                <button class="btn btn-default" title="Reset Searchfields" onclick="adapt_resultPage.resetSearchFieldButtonClicked(event)" id="search_filter_reset_buttontable-header-search"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></button>
+                                <button class="btn" title="Click for more informations about the search" onclick="adapt_searchInfoModal.openSearchInfoModal(event)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr class="table-header-headline">
+                        <th>Data Source</th>
+                        <th onclick='adapt_resultPage.triggerOrderChange("firstName")'>
+                            First Name
+                            {{ _self.addOrderAlphabetGlyphicon('firstName', orderKey, orderValue) }}
+                        </th>
+                        <th onclick='adapt_resultPage.triggerOrderChange("lastName")'>Last Name
+                            {{ _self.addOrderAlphabetGlyphicon('lastName', orderKey, orderValue) }}
+                        </th>
+                        <th onclick='adapt_resultPage.triggerOrderChange("age")'>Age
+                            {{ _self.addOrderNumberGlyphicon('age', orderKey, orderValue) }}
+                        </th>
+                        <th style="cursor: default;">Vulnerability Level</th>
+                        <th style="cursor: default;">Medical Requirements</th>
+                        <th style="cursor: default;">Transport Requirements</th>
+                        <th onclick='adapt_resultPage.triggerOrderChange("street")'>
+                            Street
+                            {{ _self.addOrderAlphabetGlyphicon('street', orderKey, orderValue) }}
+                        </th>
+                        <th onclick='adapt_resultPage.triggerOrderChange("streetNumber")'>
+                            Street No.
+                            {{ _self.addOrderNumberGlyphicon('streetNumber', orderKey, orderValue) }}
+                        </th>
+                        <th onclick='adapt_resultPage.triggerOrderChange("zip")'>
+                            Zipcode
+                            {{ _self.addOrderNumberGlyphicon('zip', orderKey, orderValue) }}
+                        </th>
+                        <th onclick='adapt_resultPage.triggerOrderChange("city")'>
+                            City
+                            {{ _self.addOrderAlphabetGlyphicon('city', orderKey, orderValue) }}
+                        </th>
+                        <th onclick='adapt_resultPage.triggerOrderChange("floor")'>
+                            Floor
+                            {{ _self.addOrderNumberGlyphicon('floor', orderKey, orderValue) }}
+                        </th>
+                        <th onclick='adapt_resultPage.triggerOrderChange("safetyStatus")'>
+                            Safety Status
+                        </th>
+                        <th class="actions_column">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if arrayForDisplay|length == 0 %}
+                        <tr>
+                            <td colspan="15">
+                                <p style="font-size: 14pt;">No results were found for this query. You can try <a onclick="adapt_resultPage.resetSearchFieldButtonClicked(event)">resetting the filter</a> or you can <a onclick="adapt_resultPage.backToFindPageStep(1)">refine the query</a>.</p>
+                            </td>
+                        </tr>
+                    {% else %}
+                        {% for arrayForDisplayItem in arrayForDisplay %}
+                            {% for personOfPI in arrayForDisplayItem %}
+                                {% include 'vulnerablePeople/result_row.html.twig' with {'personForDisplay': personOfPI.person, 'piHelperId' : personOfPI.piHelperId, 'piIndex' : loop.index} %}
+
+                                {% if loop.index >= 2 and loop.last %}
+                                    <tr data-belongs-to-pi="{{ personOfPI.piHelperId }}" class="personListToggleRow">
+                                        <td colspan="14" data-expanded="0" onclick="adapt_person_lists.toggleShowAllPersonsOfPI(event, {{ personOfPI.piHelperId }})"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span><span class="text">Show all persons of this Potential Identity</span></td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4" style="float: left">
+                {% if pagesTotal != 1 %}
+                    <a class="btn btn-info btn-sm" onclick="adapt_resultPage.showAllEntitiesButtonClicked()">Show All (Maybe slow)</a>
+                {% endif %}
+            </div>
+
+            <div class="col-md-1">
+
+                {% if currentPage > 1 %}
+                    <a class="btn btn-default btn-sm" onclick="adapt_paginator.goToPage(1)">|<</a>
+                    <a class="btn btn-default btn-sm" onclick="adapt_paginator.goToPage({{ currentPage-1 }})"> < </a>
+                {% endif %}
+
+            </div>
+            <div class="col-md-1" style="text-align: center; margin-top: 5px" >
+                {% if pagesTotal >= 1 %}
+                    {{ currentPage }} of {{ pagesTotal }}
+                {% endif %}
+            </div>
+            <div class="col-md-1">
+                {% if currentPage < pagesTotal %}
+                    <a class="btn btn-default btn-sm" onclick="adapt_paginator.goToPage({{ currentPage+1 }})"> > </a>
+                    <a class="btn btn-default btn-sm" onclick="adapt_paginator.goToPage({{ pagesTotal }})">>|</a>
+                {% endif %}
+            </div>
+            <div class="col-md-5">
+
+                {% if pagesTotal > 1 %}
+                    <div class="goto_page_container" style="float: right">
+                        <input type="number" class="form-control goto_page_textBox"  id="goto_page_input">
+                        <a class="btn btn-sm btn-default" onclick="adapt_paginator.goToPageButtonClicked(event)">Go To Page</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none">
+        {{ form_rest(form) }}
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        {% include 'javascripts/Adapt_streets.js' %}
+        {% include 'javascripts/Adapt_map.js' %}
+        {% include 'javascripts/Adapt_map_vulnerablePeople_results.js' %}
+        {% include 'javascripts/Adapt_searchInfoModal.js' %}
+        {% include 'javascripts/Adapt_resultPage.js' %}
+        {% include 'javascripts/Adapt_person_lists.js' %}
+        {% include 'javascripts/Adapt_paginator.js' %}
+        adapt_paginator = new Adapt_paginator("find_vulnerable_people");
+
+        $(document).ready(function () {
+
+            $('[data-toggle="popover"]').popover();
+            
+            adapt_person_lists.addGapsAfterPotentialIdentities();
+
+            {% if findMode == 'Streets' %}
+            adapt_resultPage.showResultsAsListViewTab();
+            {% endif %}
+
+            $('#queryDescription').show();
+
+            adapt_resultPage.initEventListeners();
+            adapt_map.initLeafletJSMap();
+            adapt_resultPage.initAutocompletionForAddStreetField();
+
+            //init the popover
+            $('body').popover({ selector: '[data-popover]', trigger: 'click hover', placement: 'left', delay: {show: 50, hide: 350}});
+
+            if ($(adapt_resultPage.findModeTextBox).val() != 'streets') {
+                $('#resultPageTabs').show();
+            }
+
+            // Selects the tab based on the initialView variable
+            if ($(adapt_resultPage.resultPageInitialViewTextBox).val() == 'table') {
+                $('.nav-tabs a[href="#resultsAsListView"]').tab('show');
+            }
+
+            if ($(adapt_resultPage.findModeTextBox).val() != 'streets') {
+
+                adapt_resultPage.geoAreasArray = JSON.parse('{{ geoAreasArrayJSON|raw }}');
+
+                adapt_map.drawPolygonsFromGeoAreas(adapt_resultPage.geoAreasArray);
+                adapt_map.addressesArrayForMarkerCluster = JSON.parse('{{ addressesArrayForMarkerClusterJSON|raw }}');
+                adapt_map.showPersonUrl = "{{ path('person_show', {'personId' : "PERSONIDTOBEREPLACED"}) }}";
+                adapt_map.showPersonsMarkerCluster();
+
+                adapt_map.centerGeoAreasArray(adapt_resultPage.geoAreasArray);
+            }
+
+            adapt_resultPage.updateAgeGrSmIndicator();
+            adapt_resultPage.updateFloorGrSmIndicator();
+
+            $("#grSmIndicatorAge").on('click', function () {
+
+                if ( $(adapt_resultPage.queryAgeGrSm).val() == "smaller") {
+                    $(adapt_resultPage.queryAgeGrSm).val("greater");
+                } else {
+                    $(adapt_resultPage.queryAgeGrSm).val("smaller");
+                }
+
+                adapt_resultPage.updateAgeGrSmIndicator();
+
+                if ($(adapt_resultPage.queryAge).val() != "") {
+                    adapt_resultPage.submitForm();
+                }
+            });
+
+            $(adapt_resultPage.grSmIndicatorFloor).on('click', function () {
+                if ( $(adapt_resultPage.queryFloorGrSm).val() == "smaller") {
+                    $(adapt_resultPage.queryFloorGrSm).val("greater");
+                } else {
+                    $(adapt_resultPage.queryFloorGrSm).val("smaller");
+                }
+
+                adapt_resultPage.updateFloorGrSmIndicator();
+
+                if ($(adapt_resultPage.queryFloor).val() != "") {
+                    adapt_resultPage.submitForm();
+                }
+            });
+        });
+
+    </script>
+
+{% endblock %}

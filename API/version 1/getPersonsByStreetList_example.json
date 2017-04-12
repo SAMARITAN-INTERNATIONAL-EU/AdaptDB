@@ -1,0 +1,363 @@
+[
+  {
+    "safety_status": true,
+    "id": 22,
+    "valid_until": "2017-11-21",
+    "first_name": "Abagail",
+    "last_name": "Lubowitz",
+    "fiscal_code": "86783",
+    "email": "yolanda14@example.com",
+    "date_of_birth": "1927-06-14",
+    "landline_phone": "+1-730-843-5743",
+    "cell_phone": "+1 (978) 243-4276",
+    "gender_male": false,
+    "remarks": "Fugiat dolores placeat reprehenderit nesciunt.",
+    "medical_requirements": [
+      {
+        "id": 2
+      }
+    ],
+    "transport_requirements": [
+      {
+        "id": 2
+      }
+    ],
+    "vulnerability_level": {
+      "id": 2
+    },
+    "contact_persons": [],
+    "person_addresses": [
+      {
+        "address": {
+          "house_nr": "8442",
+          "street": {
+            "id": 5,
+            "name": "Kuphal Underpass"
+          },
+          "geopoint": {
+            "lat": 17.970965,
+            "lng": 41.986973,
+            "position": null
+          }
+        },
+        "floor": null,
+        "remarks": null,
+        "is_active": true,
+        "absence_from": null,
+        "absence_to": null
+      }
+    ],
+    "potential_identity": null,
+    "data_source": {
+      "id": 2
+    }
+  },
+  {
+    "safety_status": true,
+    "id": 49,
+    "valid_until": null,
+    "first_name": "Krystina",
+    "last_name": "Jenkins",
+    "fiscal_code": "82568",
+    "email": null,
+    "date_of_birth": null,
+    "landline_phone": "1-947-513-7374",
+    "cell_phone": "601.760.7494 x3906",
+    "gender_male": true,
+    "remarks": "Maiores consequatur excepturi impedit ducimus aut voluptatum quia.",
+    "medical_requirements": [
+      {
+        "id": 3
+      }
+    ],
+    "transport_requirements": [
+      {
+        "id": 2
+      }
+    ],
+    "vulnerability_level": {
+      "id": 1
+    },
+    "contact_persons": [],
+    "person_addresses": [
+      {
+        "address": {
+          "house_nr": "2817",
+          "street": {
+            "id": 30,
+            "name": "McGlynn Street"
+          },
+          "geopoint": null
+        },
+        "floor": 5,
+        "remarks": null,
+        "is_active": true,
+        "absence_from": null,
+        "absence_to": null
+      }
+    ],
+    "potential_identity": null,
+    "data_source": {
+      "id": 3
+    }
+  },
+  {
+    "safety_status": false,
+    "id": 70,
+    "valid_until": "2018-02-09",
+    "first_name": "Wilton",
+    "last_name": "Bauch",
+    "fiscal_code": "41446",
+    "email": "khalil02@example.com",
+    "date_of_birth": "1947-01-18",
+    "landline_phone": "836.286.5497 x0958",
+    "cell_phone": "853-620-3641 x4969",
+    "gender_male": false,
+    "remarks": null,
+    "medical_requirements": [
+      {
+        "id": 3
+      },
+      {
+        "id": 1
+      }
+    ],
+    "transport_requirements": [
+      {
+        "id": 1
+      }
+    ],
+    "vulnerability_level": {
+      "id": 2
+    },
+    "contact_persons": [],
+    "person_addresses": [
+      {
+        "address": {
+          "house_nr": "6101",
+          "street": {
+            "id": 30,
+            "name": "McGlynn Street"
+          },
+          "geopoint": null
+        },
+        "floor": 3,
+        "remarks": null,
+        "is_active": false,
+        "absence_from": "2017-03-20",
+        "absence_to": null
+      }
+    ],
+    "potential_identity": null,
+    "data_source": {
+      "id": 2
+    }
+  },
+  {
+    "safety_status": false,
+    "id": 48,
+    "valid_until": null,
+    "first_name": "Aaron",
+    "last_name": "Kiehn",
+    "fiscal_code": "68297",
+    "email": "jast.maryse@example.org",
+    "date_of_birth": null,
+    "landline_phone": "282-456-5809 x104",
+    "cell_phone": "(350) 969-2430",
+    "gender_male": true,
+    "remarks": null,
+    "medical_requirements": [
+      {
+        "id": 3
+      },
+      {
+        "id": 2
+      }
+    ],
+    "transport_requirements": [],
+    "vulnerability_level": {
+      "id": 1
+    },
+    "contact_persons": [],
+    "person_addresses": [
+      {
+        "address": {
+          "house_nr": "8556",
+          "street": {
+            "id": 33,
+            "name": "Bailey Lodge"
+          },
+          "geopoint": {
+            "lat": 74.370551,
+            "lng": 171.404253,
+            "position": null
+          }
+        },
+        "floor": null,
+        "remarks": null,
+        "is_active": false,
+        "absence_from": null,
+        "absence_to": null
+      }
+    ],
+    "potential_identity": null,
+    "data_source": {
+      "id": 2
+    }
+  },
+  {
+    "safety_status": false,
+    "id": 11,
+    "valid_until": "2017-09-28",
+    "first_name": "Louisa",
+    "last_name": "Dooley",
+    "fiscal_code": "42647",
+    "email": "lila.paucek@example.net",
+    "date_of_birth": "1985-03-27",
+    "landline_phone": "(354) 318-4068 x88730",
+    "cell_phone": "(352) 883-7604",
+    "gender_male": false,
+    "remarks": "Hic reiciendis culpa rerum soluta in dicta molestiae asperiores.",
+    "medical_requirements": [],
+    "transport_requirements": [
+      {
+        "id": 2
+      },
+      {
+        "id": 1
+      }
+    ],
+    "vulnerability_level": {
+      "id": 1
+    },
+    "contact_persons": [],
+    "person_addresses": [
+      {
+        "address": {
+          "house_nr": "7910",
+          "street": {
+            "id": 43,
+            "name": "Precious Lodge"
+          },
+          "geopoint": null
+        },
+        "floor": 0,
+        "remarks": null,
+        "is_active": false,
+        "absence_from": null,
+        "absence_to": null
+      }
+    ],
+    "potential_identity": null,
+    "data_source": {
+      "id": 3
+    }
+  },
+  {
+    "safety_status": false,
+    "id": 65,
+    "valid_until": "2017-09-05",
+    "first_name": "Golden",
+    "last_name": "Gislason",
+    "fiscal_code": "93913",
+    "email": "xcasper@example.org",
+    "date_of_birth": "1960-11-13",
+    "landline_phone": "1-862-464-7090 x895",
+    "cell_phone": "507-675-3488 x4873",
+    "gender_male": true,
+    "remarks": null,
+    "medical_requirements": [],
+    "transport_requirements": [
+      {
+        "id": 2
+      },
+      {
+        "id": 1
+      }
+    ],
+    "vulnerability_level": {
+      "id": 4
+    },
+    "contact_persons": [],
+    "person_addresses": [
+      {
+        "address": {
+          "house_nr": "2525",
+          "street": {
+            "id": 43,
+            "name": "Precious Lodge"
+          },
+          "geopoint": {
+            "lat": -30.195507,
+            "lng": 46.273778,
+            "position": null
+          }
+        },
+        "floor": null,
+        "remarks": null,
+        "is_active": true,
+        "absence_from": null,
+        "absence_to": "2017-07-14"
+      }
+    ],
+    "potential_identity": null,
+    "data_source": {
+      "id": 2
+    }
+  },
+  {
+    "safety_status": true,
+    "id": 27,
+    "valid_until": null,
+    "first_name": "Dawson",
+    "last_name": "Hansen",
+    "fiscal_code": "34541",
+    "email": null,
+    "date_of_birth": null,
+    "landline_phone": "+19246433397",
+    "cell_phone": "1-339-627-4506",
+    "gender_male": false,
+    "remarks": null,
+    "medical_requirements": [
+      {
+        "id": 3
+      },
+      {
+        "id": 2
+      }
+    ],
+    "transport_requirements": [
+      {
+        "id": 3
+      },
+      {
+        "id": 2
+      }
+    ],
+    "vulnerability_level": {
+      "id": 2
+    },
+    "contact_persons": [],
+    "person_addresses": [
+      {
+        "address": {
+          "house_nr": "9163",
+          "street": {
+            "id": 88,
+            "name": "Rosanna Tunnel"
+          },
+          "geopoint": null
+        },
+        "floor": null,
+        "remarks": null,
+        "is_active": false,
+        "absence_from": null,
+        "absence_to": null
+      }
+    ],
+    "potential_identity": null,
+    "data_source": {
+      "id": 2
+    }
+  }
+]

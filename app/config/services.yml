@@ -1,0 +1,60 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+services:
+    app.js_defaults_service:
+        class: AppBundle\Service\JsDefaultsService
+        arguments: [%default_map_position_lat_lng%, %default_map_zoom%, %map_variant%]
+    app.name_normalization_service:
+        class: AppBundle\Service\NameNormalizationService
+    app.filter_helper_service:
+        class: AppBundle\Service\FilterHelperService
+    app.potential_identity_cluster_helper_service:
+            class: AppBundle\Service\PotentialIdentityClusterHelperService
+    app.role_helper_service:
+        class: AppBundle\Service\RoleHelperService
+    app.api_helper_service:
+        class: AppBundle\Service\ApiHelperService
+        arguments: ["@jms_serializer", %api_key_length%]
+    app.person_list_helper_service:
+        class: AppBundle\Service\PersonListHelperService
+    app.persist_address_helper_service:
+        class: AppBundle\Service\PersistAddressHelperService
+    app.import_helper_service:
+        class: AppBundle\Service\ImportHelperService
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.compare_helper_service"
+    app.geocoder_service:
+         class: AppBundle\Service\GeocoderService
+    app.potential_identity_helper_service:
+         class: AppBundle\Service\PotentialIdentityHelperService
+    app.send_email_notification_service:
+         class: AppBundle\Service\SendEmailNotificationService
+         arguments: [%email_data_change_information_subject%, %email_data_change_information_from_email%, '@mailer']
+    app.registration_success:
+        class: AppBundle\EventListener\RegistrationSuccessListener
+        arguments: ["@router"]
+        tags:
+             - { name: kernel.event_subscriber }
+    app.data_change_listener:
+        class: AppBundle\EventListener\DataChangeListener
+        arguments:
+            - "@security.token_storage"
+            - "@app.name_normalization_service"
+        tags:
+            - { name: doctrine.event_listener, event: onFlush }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postFlush }
+    app.registration_confirm:
+        class: AppBundle\EventListener\RegistrationConfirmListener
+        arguments: ["@router"]
+        tags:
+            - { name: kernel.event_subscriber }
+    app.custom_user_manager_service:
+        class: AppBundle\Service\CustomUserManager
+        arguments: ["@security.encoder_factory", "@fos_user.util.username_canonicalizer", "@fos_user.util.email_canonicalizer","@fos_user.object_manager",%fos_user.model.user.class%]
+    app.compare_helper_service:
+       class: AppBundle\Service\CompareHelperService
+

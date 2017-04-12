@@ -1,0 +1,72 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+    {% if app.user %}
+
+    <p>You are already logged in.</p>
+
+    {% else %}
+
+        <div class="col-lg-6 col-lg-offset-3">
+
+            <div class="row">
+            <div class="login-logo-row pull-right">
+                <img src="{{ asset('images/adapt-logo.png') }}" alt="Logo" title="Adapt DB"/>
+            </div>
+            </div>
+
+            <div class="panel panel-default" style="margin-top: 15px">
+                <div class="panel-heading">
+                    <h2 style="margin-bottom: 20px">Please Sign In to use Adapt DB</h2>
+                </div>
+                <div class="panel-body">
+
+                    <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal" >
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                        {% if error %}
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    Login failed
+                                </div>
+                                <div class="panel-body">
+                                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <label for="username" class="control-label col-sm-2">Username</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" required="required" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="control-label col-sm-2">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="password" name="_password" required="required" />
+                            </div>
+                        </div>
+
+                        {#<input type="checkbox" class="form-control" id="remember_me" name="_remember_me" value="on" />#}
+                        {#<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>#}
+
+                        <input type="submit" id="_submit" name="_submit" value="Sign In" class="btn btn-sm btn-primary" />
+                    </form>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+
+
+
+
+{% endblock fos_user_content %}

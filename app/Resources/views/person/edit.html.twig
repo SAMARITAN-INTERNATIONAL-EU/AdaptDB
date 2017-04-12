@@ -1,0 +1,114 @@
+{% form_theme edit_form 'form/fields.html.twig' %}
+
+{% block body %}
+    {{ form_start(edit_form) }}
+
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_label(edit_form.firstName) }}
+            {{ form_errors(edit_form.firstName) }}
+            {{ form_widget(edit_form.firstName, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+        <div class="col-sm-6">
+            {{ form_label(edit_form.lastName) }}
+            {{ form_errors(edit_form.lastName) }}
+            {{ form_widget(edit_form.lastName, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_label(edit_form.fiscalCode) }}
+            {{ form_errors(edit_form.fiscalCode) }}
+            {{ form_widget(edit_form.fiscalCode, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+        <div class="col-sm-6">
+            {{ form_label(edit_form.email) }}
+            {{ form_errors(edit_form.email) }}
+            {{ form_widget(edit_form.email, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_label(edit_form.dateOfBirth) }}
+            {{ form_errors(edit_form.dateOfBirth) }}
+            {{ form_widget(edit_form.dateOfBirth, {'attr': {'class': 'form-control textBox_withMarginBottom datepicker datepickerDateOfBirth'}}) }}
+        </div>
+        <div class="col-sm-6">
+
+            {{ form_label(edit_form.genderMale) }}
+            {{ form_errors(edit_form.genderMale) }}
+            {{ form_widget(edit_form.genderMale, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_label(edit_form.landlinePhone) }}
+            {{ form_errors(edit_form.landlinePhone) }}
+            {{ form_widget(edit_form.landlinePhone, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+        <div class="col-sm-6">
+            {{ form_label(edit_form.cellPhone) }}
+            {{ form_errors(edit_form.cellPhone) }}
+            {{ form_widget(edit_form.cellPhone, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_label(edit_form.medicalRequirements) }}
+            {{ form_errors(edit_form.medicalRequirements) }}
+            {{ form_widget(edit_form.medicalRequirements) }}
+        </div>
+        <div class="col-sm-6">
+            {{ form_label(edit_form.transportRequirements) }}
+            {{ form_errors(edit_form.transportRequirements) }}
+            {{ form_widget(edit_form.transportRequirements) }}
+        </div>
+    </div>
+
+    {{ form_label(edit_form.remarks) }}
+    {{ form_errors(edit_form.remarks) }}
+    {{ form_widget(edit_form.remarks, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_label(edit_form.validUntil) }}
+            <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true" data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom" data-content='{{ 'validUntilInfoText' | trans }}'></span>
+            {{ form_errors(edit_form.validUntil) }}
+            {{ form_widget(edit_form.validUntil, {'attr': {'class': 'form-control textBox_withMarginBottom datepicker datepickerValidUntil'}}) }}
+        </div>
+        <div class="col-sm-6">
+            {{ form_label(edit_form.vulnerabilityLevel) }}
+            {{ form_errors(edit_form.vulnerabilityLevel) }}
+            {{ form_widget(edit_form.vulnerabilityLevel, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+    </div>
+
+    <div style="display: none">
+        {{ form_rest(edit_form) }}
+    </div>
+
+    {{ form_end(edit_form) }}
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        {% include 'javascripts/Adapt_datepicker.js' %}
+
+        $(document).ready(function () {
+
+            $('[data-toggle="popover"]').popover();
+        });
+
+    </script>
+
+{% endblock %}

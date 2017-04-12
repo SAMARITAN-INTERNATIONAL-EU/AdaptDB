@@ -1,0 +1,183 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Adapt - People-Addresses Overview
+{% endblock %}
+
+{% block body %}
+    <h1>People-Addresses Overview</h1>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr class="table-header-search">
+            {{ form_start(filterForm) }}
+            <th></th>
+
+            {% if emergencyId is not null %}
+                <th style="width:70px;">
+                    {{ form_widget(filterForm.querySafetyStatus, { 'attr': {'class': 'form-control'} }) }}
+                </th>
+            {% endif %}
+            <th>
+                {{ form_widget(filterForm.queryFiscalCode, { 'attr': {'class': 'form-control'} }) }}
+            </th>
+            <th>
+                {{ form_widget(filterForm.queryFirstName, { 'attr': {'class': 'form-control'} }) }}
+            </th>
+            <th>
+                {{ form_widget(filterForm.queryLastName, { 'attr': {'class': 'form-control'} }) }}
+            </th>
+            <th>
+                {{ form_widget(filterForm.queryDateOfBirth, { 'attr': {'class': 'form-control datepicker datepickerDateOfBirth',
+                    'style': 'width: 100px'} }) }}
+            </th>
+            <th>
+                <div class="input-group">
+                    <div class="input-group-addon gt-lt" id="grSmIndicatorAge">&ge;</div>
+                    {{ form_widget(filterForm.queryAge, { 'attr': {'class': 'form-control'} })
+                    }}
+                </div>
+            </th>
+            <th style="width:70px;">
+                {{ form_widget(filterForm.queryIsActive, { 'attr': {'class': 'form-control pull-left' } }) }}
+            </th>
+            <th>
+                {{ form_widget(filterForm.queryStreetName, { 'attr': {'class': 'form-control'} }) }}
+            </th>
+            <th>
+                {{ form_widget(filterForm.queryStreetNr, { 'attr': {'class': 'form-control'} }) }}
+            </th>
+            <th>
+                {{ form_widget(filterForm.queryZipcode, { 'attr': {'class': 'form-control'} }) }}
+            </th>
+            <th>
+                {{ form_widget(filterForm.queryCity, { 'attr': {'class': 'form-control'} }) }}
+            </th>
+            <th style="width: 100px">
+                <div class="btn-group btn-group-filter-actions" role="group" aria-label="Buttons to send the query, reset the query or view help">
+                    <button class="btn btn-primary" title="Start Searching" onclick="adapt_personAddress_index.applySearchFieldButtonClicked(event)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    <button class="btn btn-default" title="Reset Searchfields" onclick="adapt_personAddress_index.resetSearchFieldButtonClicked(event)" id="search_filter_reset_buttontable-header-search"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></button>
+                    <button class="btn" title="Click for more informations about the search" onclick="adapt_searchInfoModal.openSearchInfoModal(event)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+                </div>
+            </th>
+            <div style="display: none">
+                {{ form_rest(filterForm) }}
+            </div>
+            {{ form_end(filterForm) }}
+        </tr>
+        <tr>
+            <th>Data Source</th>
+
+            {% if emergencyId is not null %}
+                <th>Safety Status</th>
+            {% endif %}
+            <th>Fiscal Code</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date Of Birth</th>
+            <th>Age</th>
+            <th>Active</th>
+            <th>Street</th>
+            <th>Street No.</th>
+            <th>Zipcode</th>
+            <th>City</th>
+            <th class="actions_column" style="min-width: 125px;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for person in arrayForDisplay %}
+
+            {% if person.personAddresses is defined %}
+                {% include 'person/index_row_partial.html.twig' with {'personForDisplay': person, 'piHelperId' : person.piHelperId, 'piIndex' : 1} %}
+            {% else %}
+                {#Loop over the potential identities#}
+                {% for personOfPI in person %}
+
+                    {% include 'person/index_row_partial.html.twig' with {'personForDisplay': personOfPI.person, 'piHelperId' : personOfPI.piHelperId, 'piIndex': loop.index} %}
+
+                    {% if loop.index >= 2 and loop.last %}
+                        <tr data-belongs-to-pi="{{ personOfPI.piHelperId }}" class="personListToggleRow">
+                            <td {% if emergencyId is null  %}colspan="12"{% else %}colspan="13"{% endif %}  data-expanded="0" onclick="adapt_person_lists.toggleShowAllPersonsOfPI(event, {{ personOfPI.piHelperId }})"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span><span class="text">Show all persons of this Potential Identity</span></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="row pagination-row">
+        <div class="col-md-4" style="float: left">
+            <a class="btn btn-default" href="{{ path('person_new') }}">New Person</a>
+        </div>
+
+        <div class="col-md-1">
+
+            {% if currentPage > 1 %}
+                <a class="btn btn-default btn-sm" onclick="adapt_paginator.goToPage(1)">|<</a>
+                <a class="btn btn-default btn-sm" onclick="adapt_paginator.goToPage({{ currentPage-1 }})"> < </a>
+            {% endif %}
+
+        </div>
+        <div class="col-md-1" style="text-align: center; margin-top: 5px" >
+            {% if pagesTotal >= 1 %}
+                {{ currentPage }} of {{ pagesTotal }}
+            {% endif %}
+        </div>
+        <div class="col-md-1">
+            {% if currentPage < pagesTotal %}
+                <a class="btn btn-default btn-sm" onclick="adapt_paginator.goToPage({{ currentPage+1 }})"> > </a>
+                <a class="btn btn-default btn-sm" onclick="adapt_paginator.goToPage({{ pagesTotal }})">>|</a>
+            {% endif %}
+        </div>
+        <div class="col-md-5">
+
+            {% if pagesTotal > 1 %}
+                <div class="goto_page_container" style="float: right">
+                    <input type="number" class="form-control goto_page_textBox"  id="goto_page_input">
+                    <a class="btn btn-sm btn-default" onclick="adapt_paginator.goToPageButtonClicked(event)">Go To Page</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        {% include 'javascripts/Adapt_personAddress_index.js' %}
+        {% include 'javascripts/Adapt_datepicker.js' %}
+        {% include 'javascripts/Adapt_searchInfoModal.js' %}
+        {% include 'javascripts/Adapt_paginator.js' %}
+        {% include 'javascripts/Adapt_person_lists.js' %}
+        adapt_paginator = new Adapt_paginator("people_addresses_filter");
+
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+
+            adapt_person_lists.addGapsAfterPotentialIdentities();
+
+            //Loads the initial state of the AgeGrSmIndicator
+            adapt_personAddress_index.updateAgeGrSmIndicator();
+
+            $('#grSmIndicatorAge').on('click', function () {
+
+                if ( $(adapt_personAddress_index.queryAgeGrSm).val() == "smaller") {
+                    $(adapt_personAddress_index.queryAgeGrSm).val("greater");
+                } else {
+                    $(adapt_personAddress_index.queryAgeGrSm).val("smaller");
+                }
+
+                adapt_personAddress_index.updateAgeGrSmIndicator();
+
+                if ($(adapt_personAddress_index.queryAge).val() != "") {
+                    adapt_personAddress_index.submitFilterForm();
+                }
+            });
+        });
+
+    </script>
+
+{% endblock %}

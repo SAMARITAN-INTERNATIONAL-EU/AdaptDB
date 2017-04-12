@@ -1,0 +1,87 @@
+{% if personForDisplay.personaddresses | length >= 1%}
+    {% set rowspanValue = personForDisplay.personaddresses | length %}
+{% else %}
+    {% set rowspanValue = 1 %}
+{% endif %}
+
+{% if personForDisplay.personAddresses | length == 0 %}
+
+    <tr data-belongs-to-pi="{{ piHelperId }}" {% if piIndex >= 2 %}data-pi-additional-person{% endif %}>
+        <td><div class="badge badge-datasource {% if personForDisplay.dataSource.isOfficial %}badge-isOfficial{% endif %}">{{ personForDisplay.dataSource.nameShort }}</div></td>
+
+        {% if emergencyId is not null %}
+            <td>
+                {% if personForDisplay.emergencySafetyStatuses[0].safetyStatus  == "1" %}
+                    <span class="badge badge-safe">Safe</span><br>
+                {% else %}
+                    <span class="badge badge-notSafe">Not Safe</span><br>
+                {% endif %}
+            </td>
+        {% endif %}
+        <td>{{ personForDisplay.fiscalCode }}</td>
+        <td>{{ personForDisplay.firstName }}</td>
+        <td>{{ personForDisplay.lastName }}</td>
+        {% if personForDisplay.dateOfBirth is not null %}
+            <td title="{{ personForDisplay.dateOfBirth | date("d M Y") }}">{{ personForDisplay.dateOfBirth | date }}</td>
+            <td>{{ personForDisplay.age }}</td>
+        {% else %}
+            <td></td>
+            <td></td>
+        {% endif %}
+        <td colspan="5">{{ "no_address_description_in_list" | trans }}</td>
+        <td class="actions_column" style="width: 125px;">
+            <a target="_blank" href="{{ path('person_show', { 'personId': personForDisplay.id }) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Person</a>
+            <br>
+            <a href="#" onclick="adapt_personAddress_index.showDeleteConfirmationForPerson({{ personForDisplay.id }}, '{{ personForDisplay.firstName|url_encode }} {{ personForDisplay.lastName|replace({"'": ""}) }}')"><span class='glyphicon foo glyphicon-trash' aria-hidden='true'></span> Delete Person</a>
+        </td>
+    </tr>
+{% else %}
+    <tr data-belongs-to-pi="{{ piHelperId }}" {% if piIndex >= 2 %}data-pi-additional-person{% endif %}>
+        <td rowspan="{{ rowspanValue }}"><div class="badge badge-datasource {% if personForDisplay.dataSource.isOfficial %}badge-isOfficial{% endif %}">{{ personForDisplay.dataSource.nameShort }}</div></td>
+        {% if emergencyId is not null %}
+            <td rowspan="{{rowspanValue }}">
+                {% if personForDisplay.emergencySafetyStatuses[0].safetyStatus  == "1" %}
+                    <span class="badge badge-safe">Safe</span><br>
+                {% else %}
+                    <span class="badge badge-notSafe">Not Safe</span><br>
+                {% endif %}
+            </td>
+        {% endif %}
+        <td rowspan="{{rowspanValue }}">{{ personForDisplay.fiscalCode }}</td>
+        <td rowspan="{{rowspanValue }}">{{ personForDisplay.firstName }}</td>
+        <td rowspan="{{rowspanValue }}">{{ personForDisplay.lastName }}</td>
+        {% if personForDisplay.dateOfBirth is not null %}
+            <td rowspan="{{rowspanValue }}" title="{{ personForDisplay.dateOfBirth | date("d M Y") }}">{{ personForDisplay.dateOfBirth | date }}</td>
+            <td rowspan="{{rowspanValue }}">
+                {{ personForDisplay.age }}
+            </td>
+        {% else %}
+            <td rowspan="{{rowspanValue }}">[not set]</td>
+            <td rowspan="{{rowspanValue }}">[unknown]</td>
+        {% endif %}
+        {% include 'person/index_row_partial_personaddress.html.twig' with {'personAddress': personForDisplay.personaddresses[0] } %}
+        <td rowspan="{{rowspanValue }}" class="actions_column">
+            {% if personForDisplay.potentialIdentity is not null %}
+                <a target="_blank" href="{{ path('show_potential_identity', { 'potentialIdentityId': personForDisplay.potentialIdentity.id }) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show PI</a>
+                <br>
+            {% endif %}
+
+            <a target="_blank" href="{{ path('person_show', { 'personId': personForDisplay.id, 'scrollToContainer': 0, }) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Person</a>
+
+            <br>
+            <a href="#" onclick="adapt_personAddress_index.showDeleteConfirmationForPerson({{ personForDisplay.id }}, '{{ personForDisplay.firstName|url_encode }} {{ personForDisplay.lastName|url_encode }}')"><span class='glyphicon foo2 glyphicon-trash' aria-hidden='true'></span> Delete Person</a>
+        </td>
+    </tr>
+
+    {% for personAddress in personForDisplay.personaddresses %}
+        {% if loop.index0 >=1 %}
+            <tr data-belongs-to-pi="{{ piHelperId }}" {% if piIndex >= 2 %}data-pi-additional-person{% endif %}>
+                {% if personForDisplay.personaddresses | length >=1 %}
+                    {% if loop.index0 >= 1 %}
+                        {% include 'person/index_row_partial_personaddress.html.twig' with {'personAddress': personForDisplay.personaddresses[loop.index0] } %}
+                    {% endif %}
+                {% endif %}
+            </tr>
+        {% endif %}
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User and Permissions{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>Edit User</h1>
+
+            {{ form_start(edit_form) }}
+            {{ form_label(edit_form.username) }}
+
+            {% if edit_form.username.vars.errors|length %}
+                <div class="alert alert-danger">
+                    {{ form_errors(edit_form.username) }}
+                </div>
+            {% endif %}
+            {{ form_widget(edit_form.username, { 'attr': {'class': 'form-control'} })  }}
+
+            <br/>
+            {{ form_label(edit_form.email) }}
+            {{ form_widget(edit_form.email, { 'attr': {'class': 'form-control'} })  }}
+
+            <br/>
+            {{ form_label(edit_form.plainPassword.first) }}
+            {{ form_widget(edit_form.plainPassword.first, { 'attr': {'class': 'form-control'} })  }}
+            <br/>
+            {{ form_label(edit_form.plainPassword.second) }}
+            {{ form_widget(edit_form.plainPassword.second, { 'attr': {'class': 'form-control'} })  }}
+
+            <div class="alert alert-info" style="margin-top: 10px">
+                If you don't define any password here the password will not be changed!
+            </div>
+            <br/>
+            <label class="label_for_checkbox">
+                {{ form_widget(edit_form.enabled) }}
+            </label> {{ form_label(edit_form.enabled) }}
+
+            <div style="height: 20px"></div>
+            <br/>
+            {{ form_label(edit_form.roles) }}
+            <br/>
+
+            <label class="label_for_checkbox">
+                {{ form_widget(edit_form.roles.children[0]) }}
+            </label> {{ form_label(edit_form.roles.children[0]) }} <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true" data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom" data-content='{{ "user_roleSystemAdminDescription" | trans }}'></span>
+            <br/>
+
+            <label class="label_for_checkbox">
+                {{ form_widget(edit_form.roles.children[1]) }}
+            </label> {{ form_label(edit_form.roles.children[1]) }} <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true" data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom" data-content='{{ "user_roleDataAdminDescription" | trans }}'></span>
+            <br/>
+
+            <label class="label_for_checkbox">
+                {{ form_widget(edit_form.roles.children[2]) }}
+            </label> {{ form_label(edit_form.roles.children[2]) }} <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true" data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom" data-content='{{ "user_roleRescueWorkerDescription" | trans }}'></span>
+            <br/>
+
+            <div class="alert alert-info" style="margin-top: 10px">
+                {{ "user_roleChangeDescription" | trans }}
+            </div>
+
+            <input class="btn btn-primary" type="submit" value="Save" />
+            <a class="btn btn-default" href="{{ path('user_index') }}">Cancel</a>
+            {{ form_end(edit_form) }}
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        {% include 'javascripts/Adapt_user.js' %}
+
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+            adapt_user.checkAtLeastOneRoleSelected();
+        });
+
+    </script>
+
+{% endblock %}

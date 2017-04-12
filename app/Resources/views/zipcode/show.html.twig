@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>ZipCode</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ zipCode.id }}</td>
+            </tr>
+            <tr>
+                <th>Zipcode</th>
+                <td>{{ zipCode.zipcode }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ zipCode.city }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('zipcode_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('zipcode_edit', { 'id': zipCode.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

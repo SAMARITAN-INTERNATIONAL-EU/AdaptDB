@@ -1,0 +1,91 @@
+firstName: First Name
+lastName: Last Name
+fiscalCode: Fiscal Code
+dateOfBirth: Date Of Birth
+vulnerabilityLevel: Vulnerability Level
+medicalRequirements: Medical Requirements
+transportRequirements: Transport Requirements
+cellPhone: Cell Phone
+landlinePhone: Landline Phone
+PersonAddress: Person-Address
+potentialIdentity: Potential Identity
+ContactPerson: Contact-Person
+remarks: Remarks
+email: E-Mail
+contactPerson: Contact Person
+phone: Phone
+person: Person
+Person: Person
+validUntil: Valid Until
+Address: Address
+address: Address
+personAddress: Person-Address
+county: Country
+floor: Floor
+isActive: Is Active
+absenceFrom: Absence From
+absenceTo: Absence To
+active and unknown: Active and Unknown
+Current page: Current page
+Apply: Apply
+inactive: Inactive
+gender: Gender
+
+houseNr: House Nr
+female: Female
+all: All
+
+#personAddress
+street: Street
+streetName: Street
+streetNr: Street No.
+city: City
+country: Country
+zipcode: Zipcode
+
+no_address_description_in_list: This person has no address
+
+validUntilInfoText: If a person is only temporary in this region, or has non-permanent vulnerabilities (for example a broken leg).
+dissolvePotentialIdentity_confirmationMessage: Do you really want dissolve this Potential Identity?
+removePersonFromPotentialIdentity_confirmationMessage: Do you really want to remove this person from this Potential Identity?
+newEmergency_mapUsageHelpString: Use the polygon-tool on the left side of the map to define a geo-area for this emergency. To finish the emergency creation you have to close the line. You can do this by clicking the first defined point (position) again. An emergency can have multiple geoAreas.
+personAddressesOverview_isActiveDescription: <dl><dt>Active and Unknown:</dt><dd>Finds all active addresses of persons and persons without addresses.</dd><dt>All:</dt><dd>Finds active and inactive addresses of persons. </dd><dt>Inactive:</dt><dd> Finds only inactive addresses.</dd></dl>
+dataSource_automaticUpdateForClearlyIdentifiedAddressesDescription: If activated the system updates addresses of persons with only one address. When there is more than one address the system tries to find the imported address in the addresses of the person.
+dataSource_enableGeocodingDescription: When enabled the Nominatim-service is queried for every address to get the geo-coordinates. If enabled the geo-coordinates provided in the CSV-file will be ignored. Due to restrictions of that service only one request can be send every second. This means that imports with geocoding enabled will need more time.
+dataSource_useGeoPointsWhenAvailableDescription: When this is enabled the system takes the geo-data from the import-file. If geo-data exists for an imported person no geocoding will be done.
+dataSource_detectMissingPersonsDescription: When incremental imports are made from a data-source the setting should be disabled. For data-sources that are imported with full-imports the settings should be enabled.
+dataSource_isOfficialDescription: Mark this if this is an official data source. Data of these data sources are more reliable. On the potential-identities-view data of these data sources are highlighted in a special color.
+dataSource_keyColumnsDescription: The key is a combination of columns of the person-table. When all the key-columns have the same value the existing person-entity will be overwritten. Otherwise a new person-entity is created.
+user_roleSystemAdminDescription: This role is required to use functions in the "Master Data"-menu.
+user_roleDataAdminDescription: This role grants access to all person-data related pages including the data import. Additionally it allows the user to manage emergencies.
+user_roleRescueWorkerDescription: This users with this role can use the "Find Vulnerable People" function for all active emergencies. They can see person detail pages for persons found via this function.
+user_roleChangeDescription: A fresh login is required in order to update the permissions of a user after the roles have been changed here.
+emergency_selectedDescription: The selected emergency is set after the "Find Vulnerable People" page was opened. The safety status of the persons are dependend on the selected emergency.
+potential_identity_confirmed_description: Potential Identities that were detected by the system are not automatically confirmed. When confirming a potential identity the system will keep it. When persons are added manually to a potential identity the potential identity is automatically confirmed.
+dataSource_badge_description: This icon appears in the application next to data of this data source. Official Data Source are highlighted with a different color.
+find_vulnerable_peope_results_data_admin_description: Because of the role "Data-Administration" the results contain more persons than the same request by an rescue worker. The results contains all related persons of the found potential identities. For rescue workers all persons with geo-locations outside the polygon are hidden.
+safetyStatus: Safety Status
+safetyStatus_title_safe: Is Safe
+safetyStatus_title_notSafe: Is Not Safe
+person_new_information: On this page new persons can be created with one address and one contact-person. More addresses and contact persons can be defined after the person has been created.
+is_active_title_yes: This address is active
+is_active_title_no: This address is inactive
+
+address_with_no_geo_point_info: This address has no geo-point. Please verify the address. After an address has been saved again the geo-point will be updated.
+
+_none_PersonAddress_deleted: "[none] Person-Address was deleted"
+_none_ContactPerson_deleted: "[none] Contact-Person was deleted"
+_none_Person_created: "[none] Person was created"
+_none_PersonAddress_created: "[none] Person-Address was created"
+_none_ContactPerson_created: "[none] Contact-Person was created"
+
+person_id_info_string: This is the Id of this person in the Adapt-DB
+potential_identity_id_info_string: This is the Id of this potential identity in the Adapt-DB
+contactPerson_id_info_string: This is the Id of this Contact-Person in the Adapt-DB
+personAddress_id_info_string: This is the Id of this Person-Address in the Adapt-DB
+
+legacy_data_description_valid_until_exceeded: This list shows persons that have exceeded the "valid until" date.
+legacy_data_description_missing_in_data_source: This list shows persons that were missing in recent imports of official data sources.
+legacy_data_description_no_updates_in_last_year: This list shows persons that haven't been updated within the last year.
+
+address_edit_geocoding_info: If geocoding is enabled the system tries to find the geo-coordinates for this address. This is necessary to show the address-location on the map.

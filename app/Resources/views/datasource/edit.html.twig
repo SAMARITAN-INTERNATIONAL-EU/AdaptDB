@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Data Source{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>Edit Data Source</h1>
+
+            {{ form_start(edit_form, {'attr': {'class': 'form-horizontal'}}) }}
+
+            {{ form_label(edit_form.name) }}
+
+            {% if edit_form.name.vars.errors|length %}
+                <div class="alert alert-danger">
+                    {{ form_errors(edit_form.name) }}
+                </div>
+            {% endif %}
+
+            {{ form_widget(edit_form.name, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+            {{ form_label(edit_form.nameShort) }}
+
+            {% if edit_form.nameShort.vars.errors|length %}
+                <div class="alert alert-danger">
+                    {{ form_errors(edit_form.nameShort) }}
+                </div>
+            {% endif %}
+
+            {{ form_widget(edit_form.nameShort, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+            <label class="label_for_checkbox">
+                {{ form_widget(edit_form.isOfficial) }}
+            </label>{{ edit_form.isOfficial.vars.label }}
+            <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                  data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom"
+                  data-content='{{ "dataSource_isOfficialDescription" | trans }}'>
+            </span>
+
+            <br/>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Default values for imports
+                </div>
+                <div class="panel-body">
+                    <label class="label_for_checkbox">
+                        {{ form_widget(edit_form.defaultForAutomaticUpdateForClearlyIdentifiedAddresses) }}
+                    </label>{{ edit_form.defaultForAutomaticUpdateForClearlyIdentifiedAddresses.vars.label }}
+                    <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                          data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom"
+                          data-content='{{ "dataSource_automaticUpdateForClearlyIdentifiedAddressesDescription" | trans }}'>
+                    </span>
+
+                    <br>
+
+                    <label class="label_for_checkbox">
+                        {{ form_widget(edit_form.defaultForDetectMissingPersons) }}
+                    </label>{{ edit_form.defaultForDetectMissingPersons.vars.label }}
+                    <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                          data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom"
+                          data-content='{{ "dataSource_detectMissingPersonsDescription" | trans }}'>
+                    </span>
+
+                    <br>
+
+                    <label class="label_for_checkbox">
+                        {{ form_widget(edit_form.defaultForEnableGeocoding) }}
+                    </label>{{ edit_form.defaultForEnableGeocoding.vars.label }}
+                    <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                          data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom"
+                          data-content='{{ "dataSource_automaticUpdateForClearlyIdentifiedAddressesDescription" | trans }}'>
+                    </span>
+                </div>
+            </div>
+
+            <br>
+
+            {{ form_label(edit_form.importKeyColumns) }}
+            <span class="glyphicon glyphicon-info-sign showPointer" aria-hidden="true" data-container="body" role="button" data-title="Information" data-html="true"
+                  data-toggle="popover" tabindex="0" data-trigger="focus" data-placement="bottom"
+                  data-content='{{ "dataSource_keyColumnsDescription" | trans }}'>
+            </span>
+
+            {% if edit_form.importKeyColumns.vars.errors|length %}
+                <div class="alert alert-danger">
+                    {{ form_errors(edit_form.importKeyColumns) }}
+                </div>
+            {% endif %}
+
+            <div class="checkbox_list">
+                {% for importKeyColumnsChild in edit_form.importKeyColumns.children %}
+                <label class="label_for_checkbox">
+                        {{ form_widget(importKeyColumnsChild) }}
+                </label>{{ importKeyColumnsChild.vars.label }}
+                    <br>
+                {% endfor %}
+            </div>
+
+            <br/>
+
+            <input class="btn btn-primary" type="submit" value="Edit" />
+            <a class="btn btn-default" href="{{ path('datasource_index') }}">Cancel</a>
+
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+            $(document).ready(function () {
+                $('[data-toggle="popover"]').popover();
+            });
+
+    </script>
+
+{% endblock %}

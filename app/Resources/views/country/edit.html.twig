@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-6">
+        <h1>Edit Country</h1>
+
+        {{ form_start(edit_form, {'attr': {'class': 'form-horizontal'}}) }}
+
+        {{ form_errors(edit_form) }}
+        {{ form_label(edit_form.name) }}
+        {{ form_widget(edit_form.name, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+        <input class="btn btn-primary" type="submit" value="Edit" />
+        <a class="btn btn-default" href="{{ path('datasource_index') }}">Cancel</a>
+
+
+        {{ form_end(edit_form) }}
+        </div>
+    </div>
+
+{% endblock %}

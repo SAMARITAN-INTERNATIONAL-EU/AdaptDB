@@ -1,0 +1,108 @@
+AppBundle\Entity\Emergency:
+   emergency1:
+        title: Example emergency (without geo area)
+        isActive: true
+        createdAt: '<dateTimeBetween("-10 days", "-5 days")>'
+
+AppBundle\Entity\User:
+   userCronjob:
+        username: cronjob-user
+        usernameCanonical: cronjob-user
+        email: cronjob-user@adaptdb
+        emailCanonical: cronjob-user@adaptdb
+        enabled: 0
+        salt: 462clk9o5a2zwk8chh80kwdgococ44g
+        password: $2y$13$lyG1hCINeiazLh745hXCJuEL.jPFYSyGU/FZqRBJ0AYKcJfRJuEY.
+        locked: 1
+
+   user1:
+      username: sysadmin
+      usernameCanonical: sysadmin
+      email: sysadmin@example.org
+      emailCanonical: sysadmin@example.org
+      enabled: 1
+      salt: 95x433oja0gs80s080g04ckwks0gooc
+      password: $2y$13$BEBYfg9Yr0o31hkO0AS99.3nsTIIJ.FyX4RLHPb/rsVfdlR1dL2aG
+      locked: 0
+
+AppBundle\Entity\VulnerabilityLevel:
+   vl1:
+      name: None
+      level: 1
+   vl2:
+      name: Vehicle
+      level: 2
+   vl3:
+      name: Wheelchair
+      level: 3
+   vl4:
+      name: Ambulance
+      level: 4
+
+AppBundle\Entity\MedicalRequirement:
+    medreq1:
+       name: Lying
+    medreq2:
+        name: Oxygen
+    medreq3:
+        name: Attendance
+
+AppBundle\Entity\TransportRequirement:
+    trareq1:
+       name: Wheelchair
+    trareq2:
+        name: Stretcher
+    trareq3:
+        name: Extra Space
+
+AppBundle\Entity\Country:
+  countryGermany:
+    name: 'Germany'
+  countryItaly:
+    name: 'Italy'
+  countryDenmark:
+    name: 'Denmark'
+
+AppBundle\Entity\ImportKeyColumn:
+   ikc1:
+      name: First Name
+      dqlName: firstName
+      importObjectName: firstName
+   ikc2:
+      name: Last Name
+      dqlName: lastName
+      importObjectName: lastName
+   ikc3:
+      name: Fiscal Code
+      dqlName: fiscalCode
+      importObjectName: fiscalCode
+   ikc4:
+      name: Date of Birth
+      dqlName: dateOfBirth
+      importObjectName: dateOfBirth
+   ikc5:
+      name: Landline Phone
+      dqlName: landlinePhone
+      importObjectName: landlinePhone
+   ikc6:
+      name: Cell Phone
+      dqlName: cellPhone
+      importObjectName: cellPhone
+   ikc7:
+      name: Gender
+      dqlName: genderMale
+      importObjectName: gender
+   ikc8:
+      name: Email
+      dqlName: email
+      importObjectName: email
+
+AppBundle\Entity\DataSource:
+   ds1:
+       name: Backend
+       nameShort: BE
+       isOfficial: false
+       defaultForAutomaticUpdateForClearlyIdentifiedAddresses: true
+       defaultForDetectMissingPersons: false
+       defaultForEnableGeocoding: true
+       importKeyColumns: ['@ikc1', '@ikc2', '@ikc3', '@ikc4', '@ikc7']

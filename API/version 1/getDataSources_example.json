@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Backend",
+    "name_short": "BE",
+    "is_official": false,
+    "default_for_automatic_update_for_clearly_identified_addresses": true,
+    "default_for_detect_missing_persons": false,
+    "default_for_enable_geocoding": true
+  },
+  {
+    "id": 2,
+    "name": "Registration office",
+    "name_short": "RO",
+    "is_official": true,
+    "default_for_automatic_update_for_clearly_identified_addresses": true,
+    "default_for_detect_missing_persons": true,
+    "default_for_enable_geocoding": true
+  },
+  {
+    "id": 3,
+    "name": "Meals on Wheels",
+    "name_short": "MW",
+    "is_official": false,
+    "default_for_automatic_update_for_clearly_identified_addresses": false,
+    "default_for_detect_missing_persons": false,
+    "default_for_enable_geocoding": true
+  }
+]

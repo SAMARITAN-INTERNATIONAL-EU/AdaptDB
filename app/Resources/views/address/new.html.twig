@@ -1,0 +1,88 @@
+{% form_theme form 'form/fields.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-xs-2">
+            {{ form_errors(form.isActive) }}
+            {{ form_widget(form.isActive, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+        <div class="col-lg-10">
+            <div class="alert alert-info">Setting an address as "not active" means that rescue workers will not search for you at this location.</div>
+        </div>
+    </div>
+
+    <div class="row" id="editAddressOverlayGeocodingEnabled" style="display: none">
+        <div class="col-xs-2">
+            {{ form_label(form.geocodingEnabled) }}
+            {{ form_errors(form.geocodingEnabled) }}
+            {{ form_widget(form.geocodingEnabled, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+        <div class="col-lg-10">
+            <div class="alert alert-info">If geocoding is enabled the system tries to find the geo-coordinates for this address. This is necessary to show the address-location on the map.</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            {{ form_label(form.address.street.name) }}
+            {{ form_errors(form.address.street.name) }}
+            {{ form_widget(form.address.street.name, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+        <div class="col-xs-6">
+            {{ form_label(form.address.houseNr) }}
+            {{ form_errors(form.address.houseNr) }}
+            {{ form_widget(form.address.houseNr, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            {{ form_label(form.address.street.zipcode.zipcode) }}
+            {{ form_errors(form.address.street.zipcode.zipcode) }}
+            {{ form_widget(form.address.street.zipcode.zipcode, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+        <div class="col-xs-6">
+            {{ form_label(form.address.street.zipcode.city) }}
+            {{ form_errors(form.address.street.zipcode.city) }}
+            {{ form_widget(form.address.street.zipcode.city, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            {{ form_label(form.floor) }}
+            {{ form_errors(form.floor) }}
+            {{ form_widget(form.floor, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+        <div class="col-xs-6">
+            {{ form_label(form.address.street.zipcode.country) }}
+            {{ form_errors(form.address.street.zipcode.country) }}
+            {{ form_widget(form.address.street.zipcode.country, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            {{ form_label(form.absenceFrom) }}
+            {{ form_errors(form.absenceFrom) }}
+            {{ form_widget(form.absenceFrom, {'attr': {'class': 'form-control textBox_withMarginBottom datepicker datepickerAbsenceFrom'}}) }}
+        </div>
+        <div class="col-xs-6">
+            {{ form_label(form.absenceTo) }}
+            {{ form_errors(form.absenceTo) }}
+            {{ form_widget(form.absenceTo, {'attr': {'class': 'form-control textBox_withMarginBottom datepicker datepickerAbsenceFrom'}}) }}
+        </div>
+    </div>
+
+    {{ form_label(form.remarks) }}
+    {{ form_errors(form.remarks) }}
+    {{ form_widget(form.remarks, {'attr': {'class': 'form-control textBox_withMarginBottom'}}) }}
+
+    {#<div style="display: none;">#}
+    {{ form_rest(form) }}
+    {#</div>#}
+
+    {{ form_end(form) }}
+{% endblock %}

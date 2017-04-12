@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AdaptDB" default="test">
+    <target name="clearCache">
+        <delete dir="var/cache/dev"/>
+        <delete dir="var/cache/prod"/>
+    </target>
+
+    <target name="cc">
+        <phingcall target="clearCache"/>
+    </target>
+	
+   <target name="updateSchema">
+        <exec command="php bin/console doctrine:schema:update --force" passthru="true" checkreturn="true"/>
+    </target>
+
+	<target name="setupDatabase">
+		<phingcall target="updateSchema" />
+	</target>
+
+	<target name="setupDatabaseWithTestdata">
+		<propertyprompt propertyName="confirm" defaultValue="N" promptText="This will update the database and load fixtures and will generate testdata. Please make sure the database which is configured in parameters.yml is empty. Do you want to continue? (Y/N)"></propertyprompt>
+		
+		<if>
+		<equals arg1="${confirm}" arg2="Y" />
+			<then>
+				<phingcall target="updateSchema" />
+				<exec command="php bin/console adaptDB:fillDatabaseWith testdata" passthru="true" checkreturn="true"/>
+			</then>
+		</if>
+	</target>
+	
+	<target name="setupDatabaseWithFixtures">
+		<propertyprompt propertyName="confirm" defaultValue="N" promptText="This will update the database and load fixtures. Please make sure the database which is configured in parameters.yml is empty. Do you want to continue? (Y/N)"></propertyprompt>
+		
+		<if>
+		<equals arg1="${confirm}" arg2="Y" />
+			<then>
+				<phingcall target="updateSchema" />
+				<exec command="php bin/console adaptDB:fillDatabaseWith fixtures" passthru="true" checkreturn="true"/>
+
+			</then>
+		</if>
+	</target>
+
+	<target name="executePeriodicTasks">
+		<exec command="php bin/console adaptDB:cleanUpDatabase" passthru="true" checkreturn="true"/>
+		<exec command="php bin/console adaptDB:detectAndDeletePotentialIdentities" passthru="true" checkreturn="true"/>
+		<exec command="php bin/console adaptDB:detectInconsistentData" passthru="true" checkreturn="true"/>
+		<exec command="php bin/console adaptDB:setIsActiveBasedAbsenceToUntilDate" passthru="true" checkreturn="true"/>
+	</target>
+
+	<target name="sendEmailsForDataChanges">
+		<exec command="php bin/console adaptDB:sendEmailsForDataChanges" passthru="true" checkreturn="true"/>
+	</target>
+
+	<target name="installJSDoc">
+        <exec command="npm install jsdoc" passthru="true" checkreturn="true"/>
+    </target>
+	
+	<target name="generateDocs">
+		<phingcall target="generateJSDoc" />
+		<phingcall target="generatePHPDoc" />
+	</target>
+	
+	<target name="generateJSDoc">
+		<propertyprompt propertyName="overwriteJSDocs" defaultValue="N"
+			promptText="Are you sure you want to overwrite the current JSDocs? (Y/N)"></propertyprompt>
+		<if>
+			<equals arg1="${overwriteJSDocs}" arg2="Y" />
+			<then>
+				<if>
+					<available file='node_modules/.bin/jsdoc' type='file' />
+					<then>
+						<mkdir dir="docs/js" />
+						<exec command=".\node_modules\.bin\jsdoc app\Resources\views\javascripts -r -d .\docs\js" passthru="true" checkreturn="true"/>
+						<echo>The JavaScript documentation has been generated. You can view it by opening the index.html in the ./docs/js folder.</echo>
+					</then>
+					<else>
+						<echo>This command requires the node_modules/.bin/jsdoc file to exist. The file was not found.</echo>
+						<echo>Try installing JSDoc by calling 'phing installJSDoc'</echo>
+					</else>
+				</if>
+			</then>
+			<else>
+				<echo>aborting</echo>
+			</else>
+		</if>
+    </target>
+	
+	<target name="generatePHPDoc">
+			<propertyprompt propertyName="overwritePHPDocs" defaultValue="N"
+				promptText="Are you sure you want to overwrite the current PHPDocs? (Y/N)"></propertyprompt>
+					<if>
+						<equals arg1="${overwritePHPDocs}" arg2="Y" />
+						<then>		
+							 <if>
+							<available file='phpDocumentor.phar' type='file' />
+							<then>			
+								<exec command="php phpDocumentor.phar -d ./src -t ./docs/api --template=responsive-twig" passthru="true" checkreturn="true"/>
+								<echo>The documentation has been generated. You can view it by opening the index.html in the ./docs/api folder.</echo>
+							</then>
+							<else>
+								<echo>This command requires the phpDocumentor.phar in the project's root folder. The file was not found. You can download the file here: http://phpdoc.org/phpDocumentor.phar</echo>
+							</else>
+							
+						</if>
+						</then>
+						<else>
+							<echo>aborting</echo>
+						</else>
+					</if>
+	
+    </target>
+</project>

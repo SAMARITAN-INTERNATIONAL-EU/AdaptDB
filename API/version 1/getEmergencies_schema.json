@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Array of countries",
+  "type": "array",
+    "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "title": {
+        "type": "string"
+      },
+      "geo_areas": {
+        "type": "array",
+          "items": {
+          "type": "object", 
+          "properties": {
+            "geo_points": {
+              "type": "array",
+                 "items": {
+                   "type": "object", 
+          				"properties": {
+            				"lng": {
+                              "type": "number"
+                            },
+                             "lat": {
+                              "type": "number"
+                            },
+                              "position": {
+                              "type": "number"
+                            }
+                        } ,"required":
+                        ["lng",
+                         "lat",
+                         "position"]
+          		}
+            }, 
+               
+          }, "required": ["geo_points"]
+        }  
+      },
+      "is_active": {
+        "type": "boolean"
+      }
+     
+    }, "required": [
+      "id",
+      "title",
+      "geo_areas",
+      "is_active"
+    ]
+}
+}

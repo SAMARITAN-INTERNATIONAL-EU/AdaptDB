@@ -1,0 +1,67 @@
+[
+  {
+    "safety_status": true,
+    "id": 43,
+    "valid_until": "2018-06-19T00:00:00+0200",
+    "first_name": "Bret",
+    "last_name": "Erdman",
+    "fiscal_code": "64519",
+    "email": "bret@example.com",
+    "date_of_birth": "1981-06-29T00:00:00+0200",
+    "landline_phone": "1-538-821-8118 x58015",
+    "cell_phone": "(237) 868-1846 x77849",
+    "gender_male": true,
+    "remarks": "Ipsum perferendis ut dolorum excepturi deleniti voluptatem.",
+    "medical_requirements": [
+      {
+        "id": 2
+      }
+    ],
+    "transport_requirements": [
+      {
+        "id": 2
+      },
+      {
+        "id": 1
+      }
+    ],
+    "vulnerability_level": {
+      "id": 2
+    },
+    "contact_persons": [
+      {
+        "first_name": "Peter",
+        "last_name": "Erdmann",
+        "remarks": "Dad",
+        "phone": "0815"
+      }
+    ],
+    "person_addresses": [
+      {
+        "address": {
+          "house_nr": "37",
+          "street": {
+            "id": 101,
+            "name": "Palanterstraße"
+          },
+          "geopoint": {
+            "lat": 50.92103225,
+            "lng": 6.9217359774241,
+            "position": null
+          }
+        },
+        "floor": 7,
+        "remarks": null,
+        "is_active": false,
+        "absence_from": "2017-01-02T00:00:00+0100",
+        "absence_to": "2017-01-26T00:00:00+0100"
+      }
+    ],
+    "potential_identity": {
+      "id": 30
+    },
+    "data_source": {
+      "id": 2
+    }
+  }
+]

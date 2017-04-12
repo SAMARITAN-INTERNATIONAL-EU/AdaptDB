@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Adapt - Import - Step 1/2
+{% endblock %}
+
+{% block body %}
+    <h1>Import - Step 1/2</h1>
+
+    {{ form_start(form, {'action': path('import_step2'), 'method': 'POST'}) }}
+
+    <div class="row" style="margin-bottom: 30px">
+        <div class="col-md-3 col-lg-offset-2">
+            {{ form_label(form.dataSource) }}
+            {{ form_widget(form.dataSource, { 'attr': {'class': 'form-control', 'style' : 'margin-bottom: 10px'} })  }}
+        </div>
+
+        <div class="col-md-3">
+            <button id="showImportHistoryButton" disabled="disabled" class="btn btn-md btn-default btn-block" type="submit" onclick="adapt_import_step1.openImportsOfDataSourcePage(event)" style="margin-top: 25px;">
+                <span class="glyphicon glyphicon-road" aria-hidden="true"></span> Show Import history
+            </button>
+        </div>
+
+        <div class="col-md-4">
+        </div>
+
+        <div class="col-md-6 col-lg-offset-2">
+            {{ form_label(form.csvFile) }}
+            {{ form_widget(form.csvFile, { 'attr': {'class': 'form-control'} })  }}
+        </div>
+
+        <div style="display: none">
+            {{ form_rest(form) }}
+        </div>
+
+        <div class="col-md-6">
+        </div>
+
+        <div class="col-md-6 col-lg-offset-2">
+
+            <button class="btn btn-md btn-success" type="submit" style="margin-top: 25px;">
+                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Continue with Step 2
+            </button>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        {% include 'javascripts/Adapt_import_step1.js' %}
+
+        $('[data-toggle="popover"]').popover();
+
+        $(document).ready(function () {
+
+            $("#import_step1_dataSource").on("change", function () {
+
+                var newSelectedValue = $("#import_step1_dataSource option:selected").val();
+                if (parseInt(newSelectedValue) >= 0 ) {
+                    $('#showImportHistoryButton').removeAttr("disabled");
+                } else {
+                    $('#showImportHistoryButton').attr("disabled", "disabled");
+                }
+            });
+        });
+
+    </script>
+
+{% endblock %}
